@@ -1,6 +1,8 @@
 package misc;
 
-public class Booking {
+import java.io.Serializable;
+
+public class Booking implements Serializable {
     private int id;
     private Room room;
     private Lecturer lecturer;

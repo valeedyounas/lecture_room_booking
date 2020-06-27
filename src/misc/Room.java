@@ -1,6 +1,8 @@
 package misc;
 
-public class Room {
+import java.io.Serializable;
+
+public class Room implements Serializable {
     private String room_type;
     private int id;
     private String room_no;
