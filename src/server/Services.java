@@ -25,6 +25,7 @@ public class Services {
 
         if (i > 0) {
             db.updateRoom(booking.getRoom().getId(), 1);
+            System.out.println("v");
             return true;
         }
         return false;
