@@ -3,9 +3,9 @@ package misc;
 import java.io.Serializable;
 
 public class Staff implements Serializable {
-    String name;
-    int id;
-    String password;
+    private String name;
+    private int id;
+    private String password;
 
     public int getId() {
         return id;

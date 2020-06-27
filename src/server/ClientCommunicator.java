@@ -104,6 +104,12 @@ public class ClientCommunicator {
         this.toSend_ip = toSend_ip;
     }
 
+    public void responseTo_OtherClient(Object o, Socket clientSocket) throws Exception {
+        otherClient_sendingStream = new ObjectOutputStream(clientSocket.getOutputStream());
+        otherClient_sendingStream.writeObject(o);
+        otherClient_sendingStream.flush();
+    }
+
 
     public void setToSend_port(int toSend_port) {
         this.toSend_port = toSend_port;
