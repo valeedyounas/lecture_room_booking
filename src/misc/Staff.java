@@ -7,16 +7,17 @@ import java.util.ArrayList;
 import database.MySQLDatabase;
 
 public class Staff implements Serializable {
+    private static MySQLDatabase db = MySQLDatabase.getInstance();
     private String name;
     private int id;
     private String password;
-    MySQLDatabase db = MySQLDatabase.getInstance();
 
-    public boolean verify(int userID, String password) {
+
+    public static boolean verify(int userID, String password) {
         ArrayList<ArrayList<String>> staff = db.getIndexValue("Staff", "id", userID);
         int ID = Integer.parseInt(staff.get(0).get(0));
         String pw = staff.get(0).get(1);
-        if (id == userID && pw.contentEquals(password)) {
+        if (ID == userID && pw.contentEquals(password)) {
 
             return true;
         }

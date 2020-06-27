@@ -12,20 +12,22 @@ import java.util.ArrayList;
 
 
 public class Services {
-    MySQLDatabase db = MySQLDatabase.getInstance();
+    static MySQLDatabase db = MySQLDatabase.getInstance();
 
     public Services() throws Exception {
     }
 
-    public int add_booking(Booking booking) {
+    public static boolean add_booking(Booking booking) {
         //True: added successfully
         //False: failed, double booking
-        return db.addBooking(booking.getDate(), booking.getTime(), booking.getDuration(), booking.getReason_booking(), booking.getExpected_attendees(),
+        int i = db.addBooking(booking.getDate(), booking.getTime(), booking.getDuration(), booking.getReason_booking(), booking.getExpected_attendees(),
                 booking.getLecturer().getId(), booking.getRoom().getId(), booking.getStaff().getId());
-
+        if (i > 0)
+            return true;
+        return false;
     }
 
-    public ArrayList<Booking> prepare_bookings(ArrayList<ArrayList<String>> l) {
+    public static ArrayList<Booking> prepare_bookings(ArrayList<ArrayList<String>> l) {
         ArrayList<Booking> bookings = new ArrayList<Booking>();
         for (int i = 0; i < l.size(); i++) {
             Booking b = new Booking();
@@ -74,7 +76,7 @@ public class Services {
         return prepare_bookings(l);
     }
 
-    public ArrayList<Booking> list_roomBookings(Room room) {
+    public static ArrayList<Booking> list_roomBookings(Room room) {
         ArrayList<ArrayList<String>> b = db.getIndexValue("Booking", "room_id", room.getId());
         return prepare_bookings(b);
     }
@@ -89,7 +91,7 @@ public class Services {
         return prepare_bookings(b);
     }
 
-    public boolean update_booking(Booking booking) {
+    public static boolean update_booking(Booking booking) {
         //True: added successfully
         //False: failed, double booking
         int i = db.updateBooking(booking.getId(), booking.getDate(), booking.getTime(), booking.getDuration(), booking.getReason_booking(), booking.getExpected_attendees(),
@@ -99,7 +101,7 @@ public class Services {
         return false;
     }
 
-    public boolean delete_booking(Booking booking) {
+    public static boolean delete_booking(Booking booking) {
         //True: deleted successfully
         //False: failed, booking does not exist
         int i = db.removeRow("Booking", "id", booking.getId());
