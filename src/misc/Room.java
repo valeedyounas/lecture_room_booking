@@ -7,7 +7,7 @@ public class Room implements Serializable {
     private int id;
     private String room_no;
     private int capacity;
-    private boolean status;
+    private int status;
 
     public String getRoom_type() {
         return room_type;
@@ -41,11 +41,11 @@ public class Room implements Serializable {
         this.capacity = capacity;
     }
 
-    public boolean getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 }
