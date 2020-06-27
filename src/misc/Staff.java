@@ -1,6 +1,8 @@
 package misc;
 
-public class Staff {
+import java.io.Serializable;
+
+public class Staff implements Serializable {
     String name;
     int id;
     String password;
