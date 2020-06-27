@@ -1,13 +1,11 @@
 package server;
 
-import javafx.beans.binding.StringBinding;
+import database.MySQLDatabase;
 import misc.Booking;
 import misc.Lecturer;
 import misc.Room;
-import database.MySQLDatabase;
 import misc.Staff;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -86,7 +84,13 @@ public class Services {
         return prepare_bookings(b);
     }
 
-    public ArrayList<Booking> list_availableRooms(String type, String date) {
+    private class Requirements {
+        public int capacity;
+        public String type;
+        public String date;
+    }
+
+    public ArrayList<Booking> list_availableRooms(Requirements r) {
         ArrayList<ArrayList<String>> b = db.getIndexValue("Booking", "type", type, "date", date);
         return prepare_bookings(b);
     }
