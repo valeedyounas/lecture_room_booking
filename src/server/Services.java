@@ -28,7 +28,7 @@ public class Services {
         return null;
     }
 
-    public boolean update_booking() {
+    public boolean update_booking(Booking booking) {
         //True: added successfully
         //False: failed, double booking
         return true;
