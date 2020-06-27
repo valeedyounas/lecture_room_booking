@@ -7,8 +7,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Main {
+import java.awt.desktop.AppForegroundListener;
 
+public class Main extends Application {
+    public static Stage s;
 
     @Override
     public void start(Stage primaryStage) {
@@ -30,8 +32,8 @@ public class Main {
     }
 
     public static Stage Get_Stage() {
-        return s;
-    }
+       return s;
+   }
 
     public static void main(String[] args) {
         //initialize();
