@@ -8,9 +8,19 @@ public class Booking implements Serializable {
     private Lecturer lecturer;
     private String date;
     private String time;
-    private String duration;
+    private int duration; //would be in minutes weedu
     private String reason_booking;
+
+    public Staff getStaff() {
+        return staff;
+    }
+
+    public void setStaff(Staff staff) {
+        this.staff = staff;
+    }
+
     private int expected_attendees;
+    private  Staff staff;
 
     public int getId() {
         return id;
@@ -52,11 +62,11 @@ public class Booking implements Serializable {
         this.time = time;
     }
 
-    public String getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 

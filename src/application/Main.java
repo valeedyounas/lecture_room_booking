@@ -1,5 +1,6 @@
 package application;
 
+import database.MySQLDatabase;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,6 +18,7 @@ public class Main {
 
             primaryStage.setScene(scene);
             primaryStage.show();*/
+            MySQLDatabase.getInstance("jdbc:mysql://localhost/LectureRoomBooking", "root", "tiger");
             Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
             primaryStage.setTitle("Hello World");
             primaryStage.setScene(new Scene(root, 300, 275));

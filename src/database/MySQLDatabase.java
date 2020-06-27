@@ -101,7 +101,7 @@ public class MySQLDatabase {
 	}*/
 
 
-	public int addBooking(String date, String time, int duration, String b_reason, int ex_atendees, int l_id, int r_id,int s_id) throws SQLException
+	public int addBooking(String date, String time, int duration, String b_reason, int ex_atendees, int l_id, int r_id,int s_id)
 	{
 
 		String sqlQuery = new String();
@@ -109,7 +109,11 @@ public class MySQLDatabase {
 				+ " VALUES ('"  + date + "', '" + time + "', " + duration + ", '" + b_reason + "', " + ex_atendees +", " +l_id
 				+"," +r_id+","+ s_id +  ")";
 		System.out.println(sqlQuery);
-		return stmt.executeUpdate(sqlQuery);
+		try {
+			return stmt.executeUpdate(sqlQuery);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public int updateBooking(int ID, String date, String time, int duration, String b_reason, int ex_atendees, int l_id, int r_id,int s_id) throws SQLException
