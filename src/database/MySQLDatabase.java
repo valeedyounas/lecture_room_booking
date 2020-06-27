@@ -35,6 +35,7 @@ public class MySQLDatabase {
             stmt = dbConn.createStatement();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+
         }
     }
 
@@ -52,6 +53,7 @@ public class MySQLDatabase {
             return rows;
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
     }
 
@@ -68,6 +70,7 @@ public class MySQLDatabase {
             return rows;
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
     }
 
@@ -111,7 +114,7 @@ public class MySQLDatabase {
         }
     }
 
-    public ArrayList<ArrayList<String>> getIndexValue(String tableName, String colName1, String value1, String colName2, String value2,) {
+    public ArrayList<ArrayList<String>> getIndexValue(String tableName, String colName1, String value1, String colName2, String value2) {
         String sqlQuery = new String();
         ArrayList<ArrayList<String>> rows = new ArrayList<ArrayList<String>>();
 
@@ -127,6 +130,7 @@ public class MySQLDatabase {
             return rows;
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
     }
 
@@ -185,6 +189,7 @@ public class MySQLDatabase {
             return stmt.executeUpdate(sqlQuery);
         } catch (SQLException e) {
             e.printStackTrace();
+            return 0;
         }
     }
 
