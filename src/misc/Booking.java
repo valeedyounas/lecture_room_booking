@@ -11,6 +11,7 @@ public class Booking implements Serializable {
     private int duration; //would be in minutes weedu
     private String reason_booking;
 
+
     public Staff getStaff() {
         return staff;
     }

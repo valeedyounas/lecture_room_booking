@@ -20,9 +20,13 @@ public class MySQLDatabase {
         return dbConnection;
     }
 
-    public static MySQLDatabase getInstance() throws Exception {
+    public static MySQLDatabase getInstance()  {
         if (dbConnection == null) {
-            throw new Exception();
+            try {
+                throw new Exception();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return dbConnection;
     }
@@ -55,6 +59,14 @@ public class MySQLDatabase {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public boolean updateRoom (int id , int status){
+        String query = " update `room` set `status` = "+ status +" where `id`= " + id;
+        int i = dbConnection.executeUpdate(query);
+        if (i>0)
+            return true;
+        return false;
     }
 
     public ArrayList<ArrayList<String>> getAllBookings(String tableName) {
@@ -134,7 +146,20 @@ public class MySQLDatabase {
         }
     }
 
-
+    public ArrayList<ArrayList<String>> executeSelect(String sqlQuery){
+        ArrayList<ArrayList<String>> rows = new ArrayList<ArrayList<String>>();
+        try {
+            ResultSet rsRows = stmt.executeQuery(sqlQuery);
+            while (rsRows.next()) {
+                rows.add(rowToColumns(rsRows));
+            }
+            rsRows.close();
+            return rows;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     public int removeRow(String tableName, String colName, String value) {
         String sqlQuery = new String();
         sqlQuery = "Delete FROM " + tableName + " Where " + colName + " = '" + value + "'";

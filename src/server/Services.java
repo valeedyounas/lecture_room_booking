@@ -1,11 +1,13 @@
 package server;
 
-import database.MySQLDatabase;
+import javafx.beans.binding.StringBinding;
 import misc.Booking;
 import misc.Lecturer;
 import misc.Room;
+import database.MySQLDatabase;
 import misc.Staff;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -20,8 +22,12 @@ public class Services {
         //False: failed, double booking
         int i = db.addBooking(booking.getDate(), booking.getTime(), booking.getDuration(), booking.getReason_booking(), booking.getExpected_attendees(),
                 booking.getLecturer().getId(), booking.getRoom().getId(), booking.getStaff().getId());
-        if (i > 0)
+
+        if (i > 0) {
+            db.updateRoom(booking.getRoom().getId(), 1);
+            System.out.println("v");
             return true;
+        }
         return false;
     }
 
@@ -50,7 +56,7 @@ public class Services {
             room.setId(Integer.parseInt(row.get(0).get(0)));
             room.setRoom_no(row.get(0).get(1));
             room.setCapacity(Integer.parseInt(row.get(0).get(2)));
-            room.setStatus(Boolean.parseBoolean(row.get(0).get(3)));
+            room.setStatus(Integer.parseInt(row.get(0).get(3)));
             room.setRoom_type(row.get(0).get(4));
             b.setRoom(room);
 
@@ -86,15 +92,30 @@ public class Services {
     }
 
     public ArrayList<Booking> list_dayBookings(Requirements r) {
-        ArrayList<ArrayList<String>> b = db.getIndexValue("Booking", "date", date);
+        ArrayList<ArrayList<String>> b = db.getIndexValue("Booking", "date", r.date);
         return prepare_bookings(b);
     }
 
+    public ArrayList<Room> list_availableRooms(Requirements r) {
 
-    public ArrayList<Booking> list_availableRooms(Requirements r) {
-        ArrayList<ArrayList<String>> b = db.getIndexValue("Booking", "type", type, "date", date);
-        return prepare_bookings(b);
+        String query = "select * from `room` where ( `type` ='" + r.type + "' and `capacity` >= " + r.capacity +
+                " and `status`=0" + ")";
+        ArrayList<Room> rooms = new ArrayList<Room>();
+        ArrayList<ArrayList<String>> b = db.executeSelect(query);
+
+        for (int i = 0; i < b.size(); i++) {
+
+            Room room = new Room();
+            room.setId(Integer.parseInt(b.get(i).get(0)));
+            room.setRoom_no(b.get(i).get(1));
+            room.setCapacity(Integer.parseInt(b.get(i).get(2)));
+            room.setStatus(Integer.parseInt(b.get(i).get(3)));
+            room.setRoom_type(b.get(i).get(4));
+            rooms.add(room);
+        }
+        return rooms;
     }
+
 
     public static boolean update_booking(Booking booking) {
         //True: added successfully
