@@ -1,9 +1,11 @@
 package misc;
 
-public class Staff {
-    String name;
-    int id;
-    String password;
+import java.io.Serializable;
+
+public class Staff implements Serializable {
+    private String name;
+    private int id;
+    private String password;
 
     public int getId() {
         return id;
