@@ -79,16 +79,17 @@ public class Services {
         return prepare_bookings(b);
     }
 
-    public ArrayList<Booking> list_dayBookings(String date) {
-        ArrayList<ArrayList<String>> b = db.getIndexValue("Booking", "date", date);
-        return prepare_bookings(b);
-    }
-
-    private class Requirements {
+    class Requirements {
         public int capacity;
         public String type;
         public String date;
     }
+
+    public ArrayList<Booking> list_dayBookings(Requirements r) {
+        ArrayList<ArrayList<String>> b = db.getIndexValue("Booking", "date", date);
+        return prepare_bookings(b);
+    }
+
 
     public ArrayList<Booking> list_availableRooms(Requirements r) {
         ArrayList<ArrayList<String>> b = db.getIndexValue("Booking", "type", type, "date", date);

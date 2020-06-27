@@ -1,6 +1,5 @@
 package server;
 
-import javafx.concurrent.Service;
 import misc.Booking;
 import misc.Room;
 import misc.Staff;
@@ -26,7 +25,6 @@ public class ReceiveThread extends Thread {
             try {
                 client_details = tempx.receiveFrom_otherClient(connectSocket);
                 cmd = tempx.receiveFrom_otherClient(connectSocket);
-
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -37,17 +35,29 @@ public class ReceiveThread extends Thread {
             System.out.println(client_details.getClass().getName());
             if (client_details.getClass().getName().equals("misc.Staff")) {
                 Staff a = (Staff) client_details;
-                //Write authentication code
-                boolean is_verified = Staff.verify(a.getId(),a.getPassword());
+                String command = (String) cmd;
+                if (command.compareTo("SIGNIN") == 0) {
+                    //Write authentication code
+                    boolean isVerified = Staff.verify(a.getId(), a.getPassword());
 
-                try {
-
-                    tempx.responseTo_OtherClient(is_verified,connectSocket);
-
-                } catch (Exception e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    try {
+                        tempx.responseTo_OtherClient(isVerified, connectSocket);
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                } else {
+                    boolean isCreated = false;
+                    //boolean isCreated = Staff.signUp(a);
+                    try {
+                        tempx.responseTo_OtherClient(isCreated, connectSocket);
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                 }
+
+
             } else if (client_details.getClass().getName().equals("misc.Booking")) {
                 Booking b = (Booking) client_details;
                 String command = (String) cmd;
@@ -94,11 +104,15 @@ public class ReceiveThread extends Thread {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-            } else if (client_details instanceof String) {
-                String room_type = (String) client_details;
-                String date = (String) cmd;
-                //send all available rooms of type:room_type on Date:date
-                //Services.list_availableRooms();
+            } else if (client_details instanceof Services.Requirements) {
+                Services.Requirements room_type = (Services.Requirements) client_details;
+                String command = (String) cmd;
+                if (command.compareTo("AVAILABLE") == 0) {
+
+                } else if (command.compareTo("LISTDAY") == 0) {
+
+                }
+
                 try {
                     //tempx.responseTo_OtherClient(signup_booleans, connectSocket);
                 } catch (Exception e) {
