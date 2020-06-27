@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="661.0" prefWidth="754.0" styleClass="backgroundWhite" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+   <children>
+      <TextField fx:id="nameSignUp" layoutX="854.0" layoutY="203.0" promptText="Your Name" styleClass="button1" stylesheets="@StyleSheet.css" />
+      <TextField fx:id="PhoneSignUp" layoutX="854.0" layoutY="337.0" promptText="Your Phone Number" styleClass="button1" stylesheets="@StyleSheet.css" />
+      <TextField fx:id="emailSignUp" layoutX="854.0" layoutY="272.0" promptText="Your User Name" styleClass="button1" stylesheets="@StyleSheet.css" />
+      <PasswordField fx:id="passwordSignUp" layoutX="854.0" layoutY="400.0" promptText="Your Password" styleClass="button1" stylesheets="@StyleSheet.css" />
+      <Button fx:id="SignUp" layoutX="853.0" layoutY="466.0" mnemonicParsing="false" onAction="#handleButtonSignUp" prefHeight="39.0" prefWidth="172.0" styleClass="button1" stylesheets="@StyleSheet.css" text="Create Account" />
+      <Label fx:id="l3SignUp" layoutX="863.0" layoutY="248.0" textFill="RED" />
+      <Label fx:id="l4SignUp" layoutX="861.0" layoutY="314.0" prefHeight="17.0" prefWidth="134.0" textFill="RED" />
+      <Label fx:id="l5SignUp" layoutX="863.0" layoutY="378.0" textFill="RED" />
+      <Label fx:id="l6SignUp" layoutX="863.0" layoutY="442.0" textFill="RED" />
+      <AnchorPane layoutX="262.0" layoutY="1.0" prefHeight="660.0" prefWidth="355.0" styleClass="backgroundBlue" stylesheets="@StyleSheet.css">
+         <children>
+            <TextField fx:id="emailLogIn" layoutX="106.0" layoutY="204.0" promptText="User Name" styleClass="button1" stylesheets="@StyleSheet.css" />
+            <Button fx:id="LogIn" layoutX="106.0" layoutY="330.0" mnemonicParsing="false" onAction="#handleButtonLogIn" prefHeight="39.0" prefWidth="172.0" styleClass="button1" stylesheets="@StyleSheet.css" text="Log In" />
+            <Label fx:id="l1LogIn" layoutX="111.0" layoutY="245.0" textFill="RED" />
+            <Label fx:id="l2LogIn" layoutX="110.0" layoutY="309.0" textFill="RED" />
+            <PasswordField fx:id="passwordLogIn" layoutX="106.0" layoutY="267.0" promptText="Password" styleClass="button1" stylesheets="@StyleSheet.css" />
+            <Text fill="WHITE" layoutX="168.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+      <Text fill="DARKBLUE" layoutX="875.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Account">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Text>
+      <Button fx:id="adminPanel" layoutX="1251.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonAdminPanel" styleClass="button1" text="Admin Panel" />
+   </children>
+</AnchorPane>
