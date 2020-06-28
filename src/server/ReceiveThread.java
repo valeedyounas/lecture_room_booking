@@ -66,10 +66,10 @@ public class ReceiveThread extends Thread {
                             e.printStackTrace();
                         }
                     } else if (command.compareTo("SIGNUP")==0){
-                        boolean isCreated = false;
-                        //boolean isCreated = Staff.signUp(a);
+
+                        int isCreated = Staff.signUp(a);
                         try {
-                            tempx.responseTo_OtherClient((Boolean)isCreated, connectSocket);
+                            tempx.responseTo_OtherClient(isCreated, connectSocket);
                         } catch (Exception e) {
                             // TODO Auto-generated catch block
                             e.printStackTrace();

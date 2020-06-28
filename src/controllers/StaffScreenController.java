@@ -2,6 +2,7 @@ package controllers;
 
 import application.Main;
 import application.mainFactory;
+import client.ServerCommunicator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,8 +26,6 @@ public class StaffScreenController {
     public void listBookings() {
         Parent root = null;
         try {
-
-
             root = FXMLLoader.load(getClass().getResource("../gui/BookingReport.fxml"));
             Scene scene = new Scene(root);
             Main.Get_Stage().setScene(scene);
@@ -77,6 +76,14 @@ public class StaffScreenController {
     }
 
 
-    public void Back(ActionEvent actionEvent) {
+    @FXML
+    public void logout(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../gui/Login.fxml"));
+        Scene scene = new Scene(root);
+        Main.Get_Stage().setScene(scene);
+        Main.Get_Stage().setTitle("Staff Screen");
+        Main.Get_Stage().show();
+        main.client.close_connection();
+
     }
 }

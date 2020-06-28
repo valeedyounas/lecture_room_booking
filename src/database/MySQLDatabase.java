@@ -1,13 +1,10 @@
 package database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class MySQLDatabase {
+
     private Connection dbConn;
     private Statement stmt;
 
@@ -147,15 +144,18 @@ public class MySQLDatabase {
 
         sqlQuery = "Select * FROM " + tableName + " Where " + colName + " = '" + value + "'";
 
-        System.out.println(sqlQuery);
+       // System.out.println(sqlQuery);
         try {
             ResultSet rsRows = stmt.executeQuery(sqlQuery);
+            //System.out.println("FEDate: " + value);
+            //System.out.println(rsRows.getString("Date"));
             while (rsRows.next()) {
                 rows.add(rowToColumns(rsRows));
             }
             rsRows.close();
             return rows;
         } catch (Exception e) {
+
             e.printStackTrace();
             return null;
         }
@@ -217,15 +217,42 @@ public class MySQLDatabase {
             return 0;
         }
     }
-
+     /*String sqlQuery = "INSERT INTO `staff`(`Name`, `Password`) "
+                    + "VALUES ('" + name + "', '" + password + "')";"*/
     public int addStaff(String name, String password)  {
-        String sqlQuery = "INSERT INTO `staff`(`Name`, `Password`) "
-                + "VALUES ('" + name + "', '" + password + "')";
-        try {
-            return stmt.executeUpdate(sqlQuery);
+
+
+        String SQL_INSERT = "INSERT INTO staff (Name, Password)  VALUES (?,?)";
+        try (
+
+
+                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/lecture_room_booking", "root", "tiger");
+                PreparedStatement statement = connection.prepareStatement(SQL_INSERT,
+                        Statement.RETURN_GENERATED_KEYS);
+        ) {
+            statement.setString(1, name);
+            statement.setString(2, password);
+
+            // ...
+
+            int affectedRows = statement.executeUpdate();
+
+            if (affectedRows == 0) {
+               // throw new SQLException("Creating user failed, no rows affected.");
+                return -1;
+            }
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                }
+                else {
+                   // throw new SQLException("Creating user failed, no ID obtained.");
+                    return -1;
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-            return 0;
+            return -1;
         }
     }
 

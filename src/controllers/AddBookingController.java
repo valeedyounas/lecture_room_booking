@@ -40,7 +40,7 @@ public class AddBookingController {
 		if(validateInput())
 		{
 
-			// Insert Query for insertin data in to datbase
+
 			try {
 
 				// SERVER KO BHEJO BOOKING DETAILS
