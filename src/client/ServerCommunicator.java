@@ -49,4 +49,9 @@ public class ServerCommunicator {
 		t.join();
 		return t.getToFetch();*/
     }
+
+    public void closeConnection_server() throws Exception {
+        thisClient_receivingStream.close();
+        server_sendingStream.close();
+    }
 }
