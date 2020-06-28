@@ -65,8 +65,12 @@ public class ClientCommunicator {
     }
 
     public Object receiveFrom_server(Socket connectSocket) throws Exception {
-        thisClient_receivingStream = new ObjectInputStream(connectSocket.getInputStream());
-        return thisClient_receivingStream.readObject();
+        if (connectSocket!= null) {
+            thisClient_receivingStream = new ObjectInputStream(connectSocket.getInputStream());
+            return thisClient_receivingStream.readObject();
+        }
+        return null;
+
 		/*ClientThread t = new ClientThread(connectSocket);
 		t.start();
 		t.join();

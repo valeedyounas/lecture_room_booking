@@ -53,11 +53,11 @@ public class BookingReportController implements Initializable {
 		data = null;
 		data = FXCollections.observableArrayList();
 		// Send to server "ALL BOOKINGS"
-		main.sc.sendConnectRequest();
-		main.sc.sendTo_server( r );
-		main.sc.sendTo_server(t);
+		//main.sc.sendConnectRequest();
+		//main.sc.sendTo_server( r );
+		//main.sc.sendTo_server(t);
 		// Response from server
-		ResultSet rs = (ResultSet) main.srt.getResponse();
+		ResultSet rs = null;//(ResultSet) main.srt.getResponse();
 
 		/**********************************
 		 * TABLE COLUMN ADDED DYNAMICALLY *
@@ -101,11 +101,11 @@ public class BookingReportController implements Initializable {
 		data = null;
 		data = FXCollections.observableArrayList();
 		// Send to server "ALL BOOKINGS"
-		main.sc.sendConnectRequest();
-		main.sc.sendTo_server(r);
-		main.sc.sendTo_server(t);
+		//main.sc.sendConnectRequest();
+		//main.sc.sendTo_server(r);
+		//main.sc.sendTo_server(t);
 		// Response from server
-		ResultSet rs = (ResultSet) main.srt.getResponse();
+		ResultSet rs = null;//(ResultSet) main.srt.getResponse();
 
 		/**********************************
 		 * TABLE COLUMN ADDED DYNAMICALLY *

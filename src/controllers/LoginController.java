@@ -6,6 +6,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -28,10 +29,13 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import misc.Staff;
+import server.ClientCommunicator;
 
 public class LoginController implements Initializable {
 
+
     Main main = mainFactory.createMain();
+    ClientCommunicator cc = new ClientCommunicator(main.port);
     public static boolean validateName(String name) {
         name = name.toLowerCase();
         int l1 = name.length();
@@ -73,13 +77,19 @@ public class LoginController implements Initializable {
                 Staff s = new Staff();
                 s.setId(ID);
                 s.setPassword(pw);
-                main.sc.sendConnectRequest();
-                main.srt.start();
-                main.sc.sendTo_server(s);
-                main.sc.sendTo_server("SIGNIN");
+                Socket connectsocket=null;
 
-                boolean response = (boolean) main.srt.getResponse();
-                //close connection
+                try {
+                    connectsocket = cc.openConnection(main.ip,main.port);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                ServerReceive sr = new ServerReceive(connectsocket,cc);
+                sr.start();
+                boolean response = false;
+                if (sr.getResponse() != null) {
+                    response = (boolean) sr.getResponse();
+                }
                 boolean verified = response;
                 if (verified) {
 

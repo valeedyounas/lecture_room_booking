@@ -8,12 +8,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import server.ClientCommunicator;
 
 public class Main extends Application {
     public static Stage s;
-    public static ServerCommunicator sc = new ServerCommunicator();
-    public static ServerReceive srt ;
-
+    public static String ip = "172.0.0.1";
+    public static int port = 4000;
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -34,8 +34,6 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-       srt =  new ServerReceive(Main.sc);
-     //  srt.start();
         //initialize();
         launch(args);
     }
