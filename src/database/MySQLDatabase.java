@@ -259,15 +259,20 @@ public class MySQLDatabase {
 
     public int addBooking(String date, String time, int duration, String b_reason, int ex_atendees, int l_id, int r_id, int s_id) {
 
-        String sqlQuery = new String();
-        sqlQuery = "INSERT INTO `booking` (`date`, `time`, `duration`, `booking_reason`, `expected_atendees`,`lect_id`,`room_id`,`staff_id`)"
-                + " VALUES ('" + date + "', '" + time + "', " + duration + ", '" + b_reason + "', " + ex_atendees + ", " + l_id
-                + "," + r_id + "," + s_id + ")";
-        System.out.println(sqlQuery);
-        try {
-            return stmt.executeUpdate(sqlQuery);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        String query = "select id from Room where id= " +r_id+" and status=0";
+        if ( executeSelect(query) != null ) {
+            String sqlQuery = "INSERT INTO `booking` (`date`, `time`, `duration`, `booking_reason`, `expected_attendees`,`lect_id`,`room_id`,`staff_id`)"
+                    + " VALUES ('" + date + "', '" + time + "', " + duration + ", '" + b_reason + "', " + ex_atendees + ", " + l_id
+                    + "," + r_id + "," + s_id + ")";
+
+            System.out.println(sqlQuery);
+            try {
+                return stmt.executeUpdate(sqlQuery);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return 0;
+            }
+        }else{
             return 0;
         }
     }

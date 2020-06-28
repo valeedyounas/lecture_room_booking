@@ -67,7 +67,7 @@ public class StaffScreenController {
 
     @FXML
     public void addBooking(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../gui/StaffScreen.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../gui/AddBooking.fxml"));
         Scene scene = new Scene(root);
         Main.Get_Stage().setScene(scene);
         Main.Get_Stage().show();
