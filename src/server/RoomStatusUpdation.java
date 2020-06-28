@@ -41,6 +41,9 @@ public class RoomStatusUpdation extends Thread {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                if (t1.compareTo(t2) == 0){
+                    db.updateRoom(b.getRoom().getId(),1);
+                }
                 float diff = t1.getTime() - t2.getTime();
                 if (diff>=b.getDuration()){
                     b.getRoom().setStatus(0);
