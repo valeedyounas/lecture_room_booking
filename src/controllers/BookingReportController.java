@@ -31,6 +31,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.Callback;
+import misc.Room;
+import server.Services;
 
 public class BookingReportController implements Initializable {
 	@FXML
@@ -46,8 +48,8 @@ public class BookingReportController implements Initializable {
 
 	private ObservableList<ObservableList> data;
 
-
-	public void build()
+	@FXML
+	public void showAllBookings()
 	{
 		if(tableview!=null)
 		{
@@ -58,15 +60,13 @@ public class BookingReportController implements Initializable {
 		 data = null;
          data = FXCollections.observableArrayList();
          try{
-        	String url1 = "jdbc:mysql://localhost/mechasalessystem";
-     		String user = "root";
-     		String password = "tiger";
-     		Class.forName("com.mysql.jdbc.Driver");
-			Connection c1;
-     		c1 = DriverManager.getConnection(url1, user, password);
-			Statement stmt = (Statement) c1.createStatement();
-	         String SQL = "SELECT * from sale_line_item";
-	         ResultSet rs = c1.createStatement().executeQuery(SQL);
+
+
+			// Send to server "ALL BOOKINGS"
+
+			// Response from server
+			 ResultSet rs = Services.list_allBookings();
+
 
            /**********************************
             * TABLE COLUMN ADDED DYNAMICALLY *
@@ -122,25 +122,7 @@ public class BookingReportController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		build();
-		ArrayList<ArrayList<String>> info = null;
-		int tot_sales=0,tot_quantity=0,tot_amount=0;
-		 try {
-			info= MySQLDatabase.getInstance().getRows("sale_line_item");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		tot_sales = info.size();
-		System.out.println(info.get(0).get(6));
-		for(int i=0;i<info.size();i++)
-		 {
-			tot_quantity+=Integer.parseInt(info.get(i).get(6));
-			tot_amount+=Integer.parseInt(info.get(i).get(5));
 
-		 }
-		lba.setText("Total Sales: "+Integer.toString(tot_sales));
-		lbb.setText("Total Quantity: "+Integer.toString(tot_quantity));
-		lbc.setText("Total Amount: " + Integer.toString(tot_amount));
 
 	}
 }
