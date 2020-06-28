@@ -219,20 +219,9 @@ public class MySQLDatabase {
             return stmt.executeUpdate(sqlQuery);
         } catch (SQLException e) {
             e.printStackTrace();
+            return 0;
         }
     }
-
-	/*public int updateEmployee(String ID, String name, String password, String phone, String address,String type) throws SQLException
-	{
-		String sqlQuery = new String();
-		/*sqlQuery = "INSERT INTO `employee`(`Name`, `Password`, `Phone`, `Address`) "
-				+ "VALUES (" + name + "', '" + password + "', '" + phone + "', '" + address + "' )";
-		sqlQuery = "UPDATE `employee` SET `Name` = '" + name + "',"
-				+ "`Type` = '" + type +"',"
-				+ " `Password` = '" + password + "', `Phone` = '" + phone +"', `Address` = '" + address +"' WHERE `employee`.`ID` = "+ ID +";";
-
-		return stmt.executeUpdate(sqlQuery);
-	}*/
 
 
     public int addBooking(String date, String time, int duration, String b_reason, int ex_atendees, int l_id, int r_id, int s_id) {
