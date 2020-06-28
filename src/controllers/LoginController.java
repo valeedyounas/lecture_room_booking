@@ -31,7 +31,7 @@ import misc.Staff;
 
 public class LoginController implements Initializable {
 
-    private ServerCommunicator sc = new ServerCommunicator();
+    Main main = mainFactory.createMain();
     public static boolean validateName(String name) {
         name = name.toLowerCase();
         int l1 = name.length();
@@ -56,7 +56,7 @@ public class LoginController implements Initializable {
     Button LogIn = new Button();
     public static String emailAddress;
 
-    Main main = mainFactory.createMain();
+
     //  public static Cart CarT;
 
 
@@ -69,15 +69,15 @@ public class LoginController implements Initializable {
                 int ID = Integer.parseInt(emailLogIn.getText());
                 String pw = passwordLogIn.getText();
                 //Response from server
-                ServerReceive srt = new ServerReceive(sc);
-                srt.start();
+
                 Staff s = new Staff();
                 s.setId(ID);
                 s.setPassword(pw);
-                sc.sendConnectRequest();
-                sc.sendTo_server(s);
-                sc.sendTo_server("SIGNIN");
-                boolean response = (boolean)srt.getResponse();
+                main.sc.sendConnectRequest();
+                main.sc.sendTo_server(s);
+                main.sc.sendTo_server("SIGNIN");
+
+                boolean response = (boolean) main.srt.getResponse();
                 //close connection
                 boolean verified = response;
                 if (verified) {

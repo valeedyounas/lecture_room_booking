@@ -1,5 +1,7 @@
 package application;
 
+import client.ServerCommunicator;
+import client.ServerReceive;
 import database.MySQLDatabase;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +11,8 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     public static Stage s;
-
+    public static ServerCommunicator sc = new ServerCommunicator();
+    public static ServerReceive srt ;
 
     @Override
     public void start(Stage primaryStage) {
@@ -29,7 +32,10 @@ public class Main extends Application {
        return s;
    }
 
+
     public static void main(String[] args) {
+       Main.srt =  new ServerReceive(Main.sc);
+       srt.start();
         //initialize();
         launch(args);
     }

@@ -77,7 +77,7 @@ public class Services {
     }
 
 
-    class Requirements {
+    public static class Requirements {
         public int capacity;
         public String type;
         public String date;
