@@ -7,7 +7,7 @@ import java.net.Socket;
 
 public class ServerCommunicator {
     private static final int server_PORT = 4000;
-    private static final String server_ip_address = "172.0.0.1";
+    private static final String server_ip_address = "127.0.0.1";
 
     private Socket thisClient_socket;
 

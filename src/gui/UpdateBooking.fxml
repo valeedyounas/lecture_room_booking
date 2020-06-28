@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox styleClass="button3" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddBookingController">
+<HBox styleClass="button3" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.UpdateBookingController">
    <children>
       <VBox prefHeight="680.0" prefWidth="640.0" stylesheets="">
         <children>
@@ -28,7 +28,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
                <children>
-                  <Label styleClass="header-label" text="Add Booking" textFill="WHITE">
+                  <Label styleClass="header-label" text="Update Booking" textFill="WHITE">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -56,6 +56,7 @@
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="280.0" minWidth="10.0" prefWidth="104.0" />
                           </columnConstraints>
                           <rowConstraints>
+                              <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
                             <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
                               <RowConstraints maxHeight="88.0" minHeight="0.0" prefHeight="45.0" vgrow="SOMETIMES" />
                               <RowConstraints maxHeight="150.0" minHeight="0.0" prefHeight="42.0" vgrow="SOMETIMES" />
@@ -67,44 +68,46 @@
                               <RowConstraints maxHeight="172.0" minHeight="5.0" prefHeight="63.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label text="Lecturer ID" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
-                              <Label prefHeight="19.0" prefWidth="47.0" text="Reason" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
-                              <TextField fx:id="l_id" styleClass="button1" GridPane.columnIndex="2">
+                              <Label text="Lecturer ID" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                              <Label prefHeight="19.0" prefWidth="47.0" text="Reason" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+                              <TextField fx:id="l_id" disable="true" styleClass="button1" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets right="10.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <TextField fx:id="r_id" prefHeight="44.0" prefWidth="331.0" styleClass="button1" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                              <TextField fx:id="r_id" disable="true" prefHeight="44.0" prefWidth="331.0" styleClass="button1" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets right="10.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <PasswordField fx:id="s_id" prefHeight="33.0" prefWidth="339.0" styleClass="button1" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                              <PasswordField fx:id="s_id" disable="true" prefHeight="33.0" prefWidth="339.0" styleClass="button1" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                  <GridPane.margin>
                                     <Insets right="10.0" />
                                  </GridPane.margin>
                               </PasswordField>
-                              <TextField fx:id="roomType1" styleClass="button1" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                              <TextField fx:id="roomType1" disable="true" styleClass="button1" GridPane.columnIndex="2" GridPane.rowIndex="4">
                                  <GridPane.margin>
                                     <Insets right="10.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <TextArea fx:id="reason" styleClass="button1" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                              <TextArea fx:id="reason" disable="true" styleClass="button1" GridPane.columnIndex="2" GridPane.rowIndex="5">
                                  <GridPane.margin>
                                     <Insets right="10.0" />
                                  </GridPane.margin>
                               </TextArea>
-                              <Label text="Room ID" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                              <Label text="Staff ID" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                              <Label text="Room Type" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                              <TextField fx:id="duration" styleClass="button1" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                              <Label text="Duration" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
-                              <Label layoutX="86.0" layoutY="192.0" prefHeight="19.0" prefWidth="117.0" text="Expected Attendees" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
-                              <TextField fx:id="expected_attendees" prefHeight="39.0" prefWidth="258.0" styleClass="button1" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                              <DatePicker fx:id="datepicker1" prefHeight="46.0" prefWidth="345.0" styleClass="button1" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-                              <Label text="Pick Date" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
-                              <TextField fx:id="time" styleClass="button1" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                              <Label prefHeight="19.0" prefWidth="102.0" text="Time (HH:MM:SS)" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+                              <Label text="Room ID" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                              <Label text="Staff ID" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                              <Label text="Room Type" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+                              <TextField fx:id="duration" disable="true" styleClass="button1" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                              <Label text="Duration" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
+                              <Label layoutX="86.0" layoutY="192.0" prefHeight="19.0" prefWidth="117.0" text="Expected Attendees" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
+                              <TextField fx:id="expected_attendees" disable="true" prefHeight="39.0" prefWidth="258.0" styleClass="button1" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                              <DatePicker fx:id="datepicker1" disable="true" prefHeight="46.0" prefWidth="345.0" styleClass="button1" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+                              <Label text="Pick Date" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="9" />
+                              <TextField fx:id="time" disable="true" styleClass="button1" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                              <Label prefHeight="19.0" prefWidth="102.0" text="Time (HH:MM:SS)" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+                              <TextField fx:id="b_id" layoutX="188.0" layoutY="53.0" styleClass="button1" GridPane.columnIndex="2" />
+                              <Label layoutX="115.0" layoutY="63.0" text="Booking ID" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
                            </children>
                         </GridPane>
                         <Label fx:id="lbl" prefHeight="47.0" prefWidth="256.0" textFill="#f52424" />

@@ -7,6 +7,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+
 
 import java.io.IOException;
 
@@ -56,6 +60,7 @@ public class StaffScreenController {
             e.printStackTrace();
         }
     }
+
 
     @FXML
     public void addBooking(ActionEvent event) throws IOException {
