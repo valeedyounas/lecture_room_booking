@@ -21,8 +21,10 @@ public class Staff implements Serializable {
 
     public static boolean verify(int userID, String password) {
         ArrayList<ArrayList<String>> staff = db.getIndexValue("Staff", "id", userID);
+
         int ID = Integer.parseInt(staff.get(0).get(0));
-        String pw = staff.get(0).get(1);
+        String pw = staff.get(0).get(2);
+        System.out.println(ID + pw);
         if (ID == userID && pw.contentEquals(password)) {
 
             return true;

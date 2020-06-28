@@ -11,7 +11,7 @@ public class MySQLDatabase {
     private Connection dbConn;
     private Statement stmt;
 
-    private static MySQLDatabase dbConnection;
+    private static MySQLDatabase dbConnection = MySQLDatabase.getInstance("jdbc:mysql://localhost/lecture_room_booking", "root", "tiger");
 
     public static MySQLDatabase getInstance(String url, String user, String password) {
         if (dbConnection == null) {
@@ -34,6 +34,7 @@ public class MySQLDatabase {
 
     private MySQLDatabase(String url, String user, String password) {
         try {
+
             Class.forName("com.mysql.jdbc.Driver");
             dbConn = DriverManager.getConnection(url, user, password);
             stmt = dbConn.createStatement();

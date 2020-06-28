@@ -35,7 +35,7 @@ public class Main extends Application {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("../gui/Login.fxml"));//LoginMainScreen
             Scene scene = new Scene(root);
-            MySQLDatabase.getInstance("jdbc:mysql://localhost/lecture_room_booking", "root", "tiger");
+
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch(Exception e) {
@@ -50,6 +50,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+
         //initialize();
         launch(args);
     }

@@ -96,7 +96,7 @@ public class LoginController implements Initializable {
                     stage = (Stage) LogIn.getScene().getWindow();
                     root = FXMLLoader.load(getClass().getResource("../gui/StaffScreen.fxml"));
                     Scene sc = new Scene(root);
-                    sc.getStylesheets().add(getClass().getResource("StyleSheet.css").toExternalForm());
+//                    sc.getStylesheets().add(getClass().getResource("StyleSheet.css").toExternalForm());
                     stage.setScene(sc);
                     stage.show();
                     main.client.start_AcceptThread();
