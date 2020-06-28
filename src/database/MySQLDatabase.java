@@ -1,6 +1,14 @@
 package database;
 
+import misc.Booking;
+import server.Services;
+
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class MySQLDatabase {
@@ -258,9 +266,28 @@ public class MySQLDatabase {
 
 
     public int addBooking(String date, String time, int duration, String b_reason, int ex_atendees, int l_id, int r_id, int s_id) {
+        Services.Requirements r = new Services.Requirements();
+        r.date = date;
+        boolean check = false;
+        ArrayList<Booking> bookings = Services.list_dayBookings(r);
 
-        String query = "select id from Room where id= " +r_id+" and status=0";
-        if ( executeSelect(query) != null ) {
+        try {
+            DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+            Time timeValue1 = new Time(formatter.parse(time).getTime());
+            LocalTime t1 = timeValue1.toLocalTime();
+        for(Booking b : bookings){
+            Time timeValue2 =  new Time(formatter.parse(b.getTime()).getTime());
+            LocalTime t2 = timeValue2.toLocalTime();
+            Duration d = Duration.between(t1, t2);
+            long minutes = d.toMinutes();
+           if ( minutes < duration ){
+               check = true;
+           }
+        }
+        if (check){
+
+        }
+
             String sqlQuery = "INSERT INTO `booking` (`date`, `time`, `duration`, `booking_reason`, `expected_attendees`,`lect_id`,`room_id`,`staff_id`)"
                     + " VALUES ('" + date + "', '" + time + "', " + duration + ", '" + b_reason + "', " + ex_atendees + ", " + l_id
                     + "," + r_id + "," + s_id + ")";
@@ -272,9 +299,11 @@ public class MySQLDatabase {
                 e.printStackTrace();
                 return 0;
             }
-        }else{
+        } catch (ParseException e) {
+            e.printStackTrace();
             return 0;
         }
+
     }
 
     public int updateBooking(int ID, String date, String time, int duration, String b_reason, int ex_atendees, int l_id, int r_id, int s_id) {
