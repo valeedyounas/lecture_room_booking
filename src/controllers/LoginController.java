@@ -61,9 +61,6 @@ public class LoginController implements Initializable {
     public static String emailAddress;
 
 
-    //  public static Cart CarT;
-
-
     @FXML
     private void handleButtonLogIn(ActionEvent event) throws SQLException, IOException {
         if (!emailLogIn.getText().trim().equals("")) {
@@ -91,6 +88,7 @@ public class LoginController implements Initializable {
                     response = (boolean) sr.getResponse();
                 }
                 boolean verified = response;
+
                 if (verified) {
 
                     Stage stage;
@@ -126,9 +124,8 @@ public class LoginController implements Initializable {
     TextField nameSignUp = new TextField();
     @FXML
     PasswordField passwordSignUp = new PasswordField();
-
     @FXML
-    private void handleButtonSignUp(ActionEvent event) throws SQLException {
+    private void handleButtonSignUp(ActionEvent event) throws SQLException, IOException {
        String name = nameSignUp.getText();
         String password = passwordSignUp.getText();
         l6SignUp.setText("");
@@ -136,11 +133,26 @@ public class LoginController implements Initializable {
             l3SignUp.setText("");
             if (!passwordSignUp.getText().trim().equals("")) {
                         //main.getCs().insert(name, password);
-                        l6SignUp.setText("Account Created Successfully");
-                        nameSignUp.setText("");
-                        passwordSignUp.setText("");
 
-                    }
+                        Staff s = new Staff();
+                        s.setName(name);
+                        s.setPassword(password);
+                        main.sc.sendConnectRequest();
+                        main.srt.start();
+                        main.sc.sendTo_server(s);
+                        main.sc.sendTo_server("SIGNUP");
+                        boolean response = (boolean) main.srt.getResponse();
+                        //close connection
+                        boolean verified = response;
+                     if (response) {
+                         l6SignUp.setText("Account Created Successfully");
+                     }else{
+                         l6SignUp.setText("Account did not create Successfully");
+                     }
+                nameSignUp.setText("");
+                passwordSignUp.setText("");
+
+            }
 //                        System.out.println(inserted);
 
                     else
@@ -152,21 +164,6 @@ public class LoginController implements Initializable {
 
 
 
-    @FXML
-    Button adminPanel = new Button();
-
-    @FXML
-    private void handleButtonAdminPanel(ActionEvent event) throws IOException {
-        /*
-        Stage stage;
-        Parent root;
-        stage = (Stage) adminPanel.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("AdminPanelLogin.fxml"));
-        Scene sc = new Scene(root);
-        sc.getStylesheets().add(getClass().getResource("StyleSheet.css").toExternalForm());
-        stage.setScene(sc);
-        stage.show();*/
-    }
 
     /**
      * Initializes the controller class.

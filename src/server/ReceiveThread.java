@@ -49,11 +49,11 @@ public class ReceiveThread extends Thread {
                             // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
-                    } else {
+                    } else if (command.compareTo("SIGNUP")==0){
                         boolean isCreated = false;
                         //boolean isCreated = Staff.signUp(a);
                         try {
-                            tempx.responseTo_OtherClient(isCreated, connectSocket);
+                            tempx.responseTo_OtherClient((Boolean)isCreated, connectSocket);
                         } catch (Exception e) {
                             // TODO Auto-generated catch block
                             e.printStackTrace();
