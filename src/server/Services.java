@@ -76,7 +76,13 @@ public class Services {
 
     }
 
-    public ResultSet list_allBookings() {
+
+    class Requirements {
+        public int capacity;
+        public String type;
+        public String date;
+    }
+    public static ResultSet list_allBookings() {
         return db.getResultSet("booking");
     }
 
@@ -85,17 +91,12 @@ public class Services {
 
     }
 
-    class Requirements {
-        public int capacity;
-        public String type;
-        public String date;
-    }
 
-    public ResultSet list_dayBookings(Requirements r) {
+    public static ResultSet list_dayBookings(Requirements r) {
         return db.getResultSet("Booking", "date", r.date);
     }
 
-    public ResultSet list_availableRooms(Requirements r) {
+    public static  ResultSet list_availableRooms(Requirements r) {
 
         String query = "select * from `room` where ( `type` ='" + r.type + "' and `capacity` >= " + r.capacity +
                 " and `status`=0" + ")";
