@@ -14,6 +14,8 @@ import java.util.logging.Logger;
 
 import application.Main;
 import application.mainFactory;
+import client.ServerCommunicator;
+import client.ServerReceive;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +31,7 @@ import misc.Staff;
 
 public class LoginController implements Initializable {
 
+    private ServerCommunicator sc = new ServerCommunicator();
     public static boolean validateName(String name) {
         name = name.toLowerCase();
         int l1 = name.length();
@@ -66,8 +69,17 @@ public class LoginController implements Initializable {
                 int ID = Integer.parseInt(emailLogIn.getText());
                 String pw = passwordLogIn.getText();
                 //Response from server
-
-                boolean verified = false;
+                ServerReceive srt = new ServerReceive(sc);
+                srt.start();
+                Staff s = new Staff();
+                s.setId(ID);
+                s.setPassword(pw);
+                sc.sendConnectRequest();
+                sc.sendTo_server(s);
+                sc.sendTo_server("SIGNIN");
+                boolean response = (boolean)srt.getResponse();
+                //close connection
+                boolean verified = response;
                 if (verified) {
 
                     Stage stage;

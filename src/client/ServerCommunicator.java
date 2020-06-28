@@ -16,7 +16,7 @@ public class ServerCommunicator {
 
     private ObjectOutputStream server_sendingStream;
 
-    ServerCommunicator() {
+    public ServerCommunicator() {
         // TODO Auto-generated constructor stub
 
     }
