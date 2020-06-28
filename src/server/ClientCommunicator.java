@@ -77,13 +77,13 @@ public class ClientCommunicator {
 		return t.getToFetch();*/
     }
 
-    public Socket openConnection(String ip, int port) throws Exception {
+    public Socket openConnection(InetAddress ip, int port) throws Exception {
 
-        toSend_ip = ip;
+        toSend_ip = ip.getHostAddress();
         toSend_port = port;
         otherClient_socket = new Socket(toSend_ip, toSend_port);
         otherClient_socket.setKeepAlive(true);
-        System.out.println("otherclient connected: " + otherClient_socket.getPort());
+        System.out.println("Otherclient connected: " + otherClient_socket.getPort());
 
         return otherClient_socket;
     }

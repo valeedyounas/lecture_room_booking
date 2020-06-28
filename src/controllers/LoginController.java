@@ -35,7 +35,8 @@ public class LoginController implements Initializable {
 
 
     Main main = mainFactory.createMain();
-    ClientCommunicator cc = new ClientCommunicator(main.port);
+    ClientCommunicator cc = new ClientCommunicator(main.thisPort);
+
     public static boolean validateName(String name) {
         name = name.toLowerCase();
         int l1 = name.length();
@@ -74,20 +75,24 @@ public class LoginController implements Initializable {
                 Staff s = new Staff();
                 s.setId(ID);
                 s.setPassword(pw);
-                Socket connectsocket=null;
+                Socket connectsocket = null;
 
                 try {
-                    connectsocket = cc.openConnection(main.ip,main.port);
+                    connectsocket = cc.openConnection(main.ip, main.serverPort);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                ServerReceive sr = new ServerReceive(connectsocket,cc);
+                ServerReceive sr = new ServerReceive(connectsocket, cc);
                 sr.start();
-                boolean response = false;
-                if (sr.getResponse() != null) {
-                    response = (boolean) sr.getResponse();
+                Object response = false;
+
+                while (sr.getResponse() == null) {
+
+                    response = sr.getResponse();
+
                 }
-                boolean verified = response;
+                System.out.println(response);
+                boolean verified = false;
 
                 if (verified) {
 
@@ -100,7 +105,7 @@ public class LoginController implements Initializable {
                     stage.setScene(sc);
                     stage.show();
                 } else {
-                    l1LogIn.setText("LogIn Failed");
+                    l1LogIn.setText("Login Failed");
                 }
             } else
                 l2LogIn.setText("Invalid");
@@ -124,45 +129,37 @@ public class LoginController implements Initializable {
     TextField nameSignUp = new TextField();
     @FXML
     PasswordField passwordSignUp = new PasswordField();
+
     @FXML
     private void handleButtonSignUp(ActionEvent event) throws SQLException, IOException {
-       String name = nameSignUp.getText();
+        String name = nameSignUp.getText();
         String password = passwordSignUp.getText();
         l6SignUp.setText("");
         if (!nameSignUp.getText().trim().equals("") && validateName(nameSignUp.getText().toString())) {
             l3SignUp.setText("");
             if (!passwordSignUp.getText().trim().equals("")) {
-                        //main.getCs().insert(name, password);
+                //main.getCs().insert(name, password);
 
-                        Staff s = new Staff();
-                        s.setName(name);
-                        s.setPassword(password);
-                        main.sc.sendConnectRequest();
-                        main.srt.start();
-                        main.sc.sendTo_server(s);
-                        main.sc.sendTo_server("SIGNUP");
-                        boolean response = (boolean) main.srt.getResponse();
-                        //close connection
-                        boolean verified = response;
-                     if (response) {
-                         l6SignUp.setText("Account Created Successfully");
-                     }else{
-                         l6SignUp.setText("Account did not create Successfully");
-                     }
+                Staff s = new Staff();
+                s.setName(name);
+                s.setPassword(password);
+                boolean response = false;
+                if (response) {
+                    l6SignUp.setText("Account Created Successfully");
+                } else {
+                    l6SignUp.setText("Account did not create Successfully");
+                }
                 nameSignUp.setText("");
                 passwordSignUp.setText("");
 
             }
 //                        System.out.println(inserted);
 
-                    else
-                        l6SignUp.setText("Field Empty");
-                } else
-                    l5SignUp.setText("Invalid");
-        }
-
-
-
+            else
+                l6SignUp.setText("Field Empty");
+        } else
+            l5SignUp.setText("Invalid");
+    }
 
 
     /**

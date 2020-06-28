@@ -10,10 +10,24 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import server.ClientCommunicator;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 public class Main extends Application {
     public static Stage s;
-    public static String ip = "172.0.0.1";
-    public static int port = 4000;
+    public static InetAddress ip;
+
+    static {
+        try {
+            ip = InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int serverPort = 4000;
+    public static int thisPort = 5000;
+
     @Override
     public void start(Stage primaryStage) {
         try {

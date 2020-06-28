@@ -11,7 +11,7 @@ public class AcceptClient extends Thread {
             while(true)
             {
                 connectSocket =any.acceptFrom_OtherClient();
-                System.out.println("Client connected"+ connectSocket.getPort());
+                System.out.println("Client connected "+ connectSocket.getPort());
             }
         }
         catch (Exception e) {
