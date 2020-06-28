@@ -6,6 +6,7 @@ public class AcceptClient extends Thread {
     ClientCommunicator any;
     Socket connectSocket;
     public void run() {
+        System.out.println("Server started, waiting for client...");
         try {
             while(true)
             {
