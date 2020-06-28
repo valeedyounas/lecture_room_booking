@@ -7,6 +7,7 @@ import misc.Room;
 import database.MySQLDatabase;
 import misc.Staff;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -75,14 +76,13 @@ public class Services {
 
     }
 
-    public ArrayList<Booking> list_allBookings() {
-        ArrayList<ArrayList<String>> l = db.getRows("booking");
-        return prepare_bookings(l);
+    public ResultSet list_allBookings() {
+        return db.getResultSet("booking");
     }
 
-    public static ArrayList<Booking> list_roomBookings(Room room) {
-        ArrayList<ArrayList<String>> b = db.getIndexValue("Booking", "room_id", room.getId());
-        return prepare_bookings(b);
+    public static ResultSet list_roomBookings(Room room) {
+        return  db.getResultSet("Booking", "room_id", room.getId());
+
     }
 
     class Requirements {
@@ -91,29 +91,26 @@ public class Services {
         public String date;
     }
 
-    public ArrayList<Booking> list_dayBookings(Requirements r) {
-        ArrayList<ArrayList<String>> b = db.getIndexValue("Booking", "date", r.date);
-        return prepare_bookings(b);
+    public ResultSet list_dayBookings(Requirements r) {
+        return db.getResultSet("Booking", "date", r.date);
     }
 
-    public ArrayList<Room> list_availableRooms(Requirements r) {
+    public ResultSet list_availableRooms(Requirements r) {
 
         String query = "select * from `room` where ( `type` ='" + r.type + "' and `capacity` >= " + r.capacity +
                 " and `status`=0" + ")";
-        ArrayList<Room> rooms = new ArrayList<Room>();
-        ArrayList<ArrayList<String>> b = db.executeSelect(query);
+        return  db.executeSelect(query);
+//        for (int i = 0; i < b.size(); i++) {
+//
+//            Room room = new Room();
+//            room.setId(Integer.parseInt(b.get(i).get(0)));
+//            room.setRoom_no(b.get(i).get(1));
+//            room.setCapacity(Integer.parseInt(b.get(i).get(2)));
+//            room.setStatus(Integer.parseInt(b.get(i).get(3)));
+//            room.setRoom_type(b.get(i).get(4));
+//            rooms.add(room);
+//        }
 
-        for (int i = 0; i < b.size(); i++) {
-
-            Room room = new Room();
-            room.setId(Integer.parseInt(b.get(i).get(0)));
-            room.setRoom_no(b.get(i).get(1));
-            room.setCapacity(Integer.parseInt(b.get(i).get(2)));
-            room.setStatus(Integer.parseInt(b.get(i).get(3)));
-            room.setRoom_type(b.get(i).get(4));
-            rooms.add(room);
-        }
-        return rooms;
     }
 
 
