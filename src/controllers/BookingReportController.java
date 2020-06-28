@@ -111,49 +111,112 @@ public class BookingReportController implements Initializable {
         tableview.setItems(data);
 
     }
-
-    private void showViews(Room r, String t) throws IOException, SQLException {
+    private void showViews( int k,Room r, String t) throws IOException, SQLException {
         data = null;
         data = FXCollections.observableArrayList();
-        // Send to server "ALL BOOKINGS"
-        //main.sc.sendConnectRequest();
-        //main.sc.sendTo_server(r);
-        //main.sc.sendTo_server(t);
-        // Response from server
-        ResultSet rs = null;//(ResultSet) main.srt.getResponse();
+        try {
+            main.client.send_toServer(r);
+            main.client.send_toServer(t);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Object o = main.client.receive_fromServer();
+        ArrayList<Booking> rs = null;
+        if (o != null) {
+            rs = (ArrayList<Booking>) o;
+        }
+        //System.out.println(rs.getMetaData().getColumnCount());
+        ArrayList<TableColumn> columns = new ArrayList<>();
 
-        /**********************************
-         * TABLE COLUMN ADDED DYNAMICALLY *
-         **********************************/
-        for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
-            //We are using non property style for making dynamic table
-            final int j = i;
-            TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
-            col.setCellValueFactory(new Callback<CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+
+        columns.add(new TableColumn("Booking ID"));
+        columns.add(new TableColumn("Room No."));
+        columns.add(new TableColumn("Lecturer Name"));
+        columns.add(new TableColumn("Staff Name"));
+
+        columns.add(new TableColumn("Date"));
+        columns.add(new TableColumn("Time"));
+        columns.add(new TableColumn("Duration"));
+        columns.add(new TableColumn("Booking Reason"));
+        columns.add( new TableColumn("Expected Attendees") );
+
+        for (int i = 0; i < columns.size(); i++) {
+            final int j = i ;
+            columns.get(i).setCellValueFactory(new Callback<CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
                 public ObservableValue<String> call(CellDataFeatures<ObservableList, String> param) {
                     return new SimpleStringProperty(param.getValue().get(j).toString());
                 }
             });
 
-            tableview.getColumns().addAll(col);
-
+            tableview.getColumns().addAll(columns.get(i));
         }
 
-        /********************************
-         * Data added to ObservableList *
-         ********************************/
-        while (rs.next()) {
-            //Iterate Row
+        for (int i = 0; i < rs.size(); i++) {
             ObservableList<String> row = FXCollections.observableArrayList();
-            for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-                //Iterate Column
-                row.add(rs.getString(i));
-            }
+
+            row.add(Integer.toString(rs.get(i).getId()));
+            row.add(rs.get(i).getRoom().getRoom_no());
+            row.add( rs.get(i).getLecturer().getName());
+            row.add( rs.get(i).getStaff().getName());
+
+            row.add(rs.get(i).getDate());
+            row.add(rs.get(i).getTime());
+            row.add(Integer.toString(rs.get(i).getDuration()));
+            row.add(rs.get(i).getReason_booking());
+            row.add(Integer.toString(rs.get(i).getExpected_attendees()));
 
             data.add(row);
+        }
+        //FINALLY ADDED TO TableView
+        tableview.setItems(data);
 
+    }
+
+    private void showViews(Room r, String t) throws IOException, SQLException {
+        data = null;
+        data = FXCollections.observableArrayList();
+        try {
+            main.client.send_toServer(r);
+            main.client.send_toServer(t);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Object o = main.client.receive_fromServer();
+        ArrayList<Room> rs = null;
+        if (o != null) {
+            rs = (ArrayList<Room>) o;
+        }
+        //System.out.println(rs.getMetaData().getColumnCount());
+        ArrayList<TableColumn> columns = new ArrayList<>();
+
+
+        columns.add(new TableColumn("Room ID"));
+        columns.add(new TableColumn("Room No."));
+        columns.add(new TableColumn("Capacity"));
+        columns.add(new TableColumn("Type"));
+
+        for (int i = 0; i < columns.size(); i++) {
+            final int j = i ;
+            columns.get(i).setCellValueFactory(new Callback<CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+                public ObservableValue<String> call(CellDataFeatures<ObservableList, String> param) {
+                    return new SimpleStringProperty(param.getValue().get(j).toString());
+                }
+            });
+
+            tableview.getColumns().addAll(columns.get(i));
         }
 
+        for (int i = 0; i < rs.size(); i++) {
+            ObservableList<String> row = FXCollections.observableArrayList();
+
+            row.add(Integer.toString(rs.get(i).getId()));
+            row.add(rs.get(i).getRoom_no());
+            row.add( Integer.toString(rs.get(i).getCapacity()));
+            row.add( rs.get(i).getRoom_type());
+            data.add(row);
+        }
         //FINALLY ADDED TO TableView
         tableview.setItems(data);
 
@@ -178,7 +241,6 @@ public class BookingReportController implements Initializable {
     Button Room;
     @FXML
     TextField roomID;
-
     @FXML
     public void showBookingsByRoom() {
         if (tableview != null) {
@@ -188,7 +250,7 @@ public class BookingReportController implements Initializable {
         try {
             Room r = new Room();
             r.setId(Integer.parseInt(roomID.getText()));
-            showViews(r, null);
+            showViews(0,r, null);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error on Building Data");

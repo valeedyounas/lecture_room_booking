@@ -22,10 +22,6 @@ public class Services {
     public Services() throws Exception {
     }
 
-
-
-
-
     public static boolean add_booking(Booking booking) {
         //True: added successfully
         //False: failed, double booking
@@ -40,7 +36,7 @@ public class Services {
         return false;
     }
 
-    public static ArrayList<Booking> prepare_bookings(ArrayList<ArrayList<String>> l) {
+    private static ArrayList<Booking> prepare_bookings(ArrayList<ArrayList<String>> l) {
         ArrayList<Booking> bookings = new ArrayList<Booking>();
         for (int i = 0; i < l.size(); i++) {
             Booking b = new Booking();
@@ -95,8 +91,24 @@ public class Services {
         public String date;
     }
 
-    public static ArrayList<ArrayList<String>> list_roomBookings(Room room) {
-        return  db.getIndexValue("Booking", "room_id", room.getId());
+
+    private static ArrayList<Room> prepare_rooms(ArrayList<ArrayList<String>> l) {
+        ArrayList<Room> rooms = new ArrayList<Room>();
+        for (int i = 0; i < l.size(); i++) {
+            Room room = new Room();
+            room.setId(Integer.parseInt(l.get(0).get(0)));
+            room.setRoom_no(l.get(0).get(1));
+            room.setCapacity(Integer.parseInt(l.get(0).get(2)));
+            room.setStatus(Integer.parseInt(l.get(0).get(3)));
+            room.setRoom_type(l.get(0).get(4));
+            rooms.add(room);
+        }
+        return rooms;
+
+    }
+
+    public static ArrayList<Booking> list_roomBookings(Room room) {
+        return  prepare_bookings(db.getIndexValue("Booking", "room_id", room.getId()));
 
     }
 
@@ -105,23 +117,13 @@ public class Services {
         return prepare_bookings(db.getIndexValue("Booking","date",r.date));
     }
 
-    public static  ArrayList<Booking> list_availableRooms(Requirements r) {
-
+    public static  ArrayList<Room> list_availableRooms(Requirements r) {
         String query = "select * from `room` where ( `type` ='" + r.type + "' and `capacity` >= " + r.capacity +
                 " and `status`=0" + ")";
-        return  prepare_bookings(db.executeSelect(query));
-//        for (int i = 0; i < b.size(); i++) {
-//
-//            Room room = new Room();
-//            room.setId(Integer.parseInt(b.get(i).get(0)));
-//            room.setRoom_no(b.get(i).get(1));
-//            room.setCapacity(Integer.parseInt(b.get(i).get(2)));
-//            room.setStatus(Integer.parseInt(b.get(i).get(3)));
-//            room.setRoom_type(b.get(i).get(4));
-//            rooms.add(room);
-//        }
-
+        return  prepare_rooms(db.executeSelect(query));
     }
+
+
 
 
     public static boolean update_booking(Booking booking) {

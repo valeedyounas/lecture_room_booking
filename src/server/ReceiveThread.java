@@ -30,7 +30,9 @@ public class ReceiveThread extends Thread {
     }
     public void run() {
 
-        ArrayList<Booking> rs = new ArrayList<Booking>();
+
+        Object rs = null;
+
         if (connectSocket!=null)
         {
             while (true) {
@@ -125,17 +127,18 @@ public class ReceiveThread extends Thread {
                     Services.Requirements room_type = (Services.Requirements) client_details;
                     String command = (String) cmd;
                     if (command == null) {
-                       rs = Services.list_allBookings();
+                       rs = (ArrayList<Booking>) Services.list_allBookings();
                     }
                     else if (command.compareTo("AVAILABLE") == 0) {
-                    //    rs.rs = Services.list_availableRooms(room_type);
+                        rs = (ArrayList<Room>)Services.list_availableRooms(room_type);
 
                     } else if (command.compareTo("LISTDAY") == 0) {
-                    //    rs.rs = Services.list_dayBookings(room_type);
+                        rs = (ArrayList<Booking>)Services.list_dayBookings(room_type);
 
                     }
 
                     try {
+
                         tempx.responseTo_OtherClient(rs, connectSocket);
                     } catch (Exception e) {
                         // TODO Auto-generated catch block
