@@ -12,6 +12,11 @@ public class AcceptClient extends Thread {
             {
                 connectSocket =any.acceptFrom_OtherClient();
                 System.out.println("Client connected "+ connectSocket.getPort());
+                if(connectSocket!= null)
+                {
+                    ReceiveThread t1 = new ReceiveThread(connectSocket,any);
+                    t1.start();
+                }
             }
         }
         catch (Exception e) {

@@ -35,7 +35,7 @@ public class LoginController implements Initializable {
 
 
     Main main = mainFactory.createMain();
-    //ClientCommunicator cc = new ClientCommunicator(main.thisPort);
+
 
     public static boolean validateName(String name) {
         name = name.toLowerCase();
