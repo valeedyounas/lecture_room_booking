@@ -16,7 +16,7 @@
       <VBox alignment="CENTER">
          <children>
             <TableView fx:id="tableview" prefHeight="990.0" prefWidth="1900.0" />
-            <Button fx:id="cancel" mnemonicParsing="false" onAction="#cancelsale" prefHeight="51.0" prefWidth="986.0" styleClass="button3" text="Back" />
+            <Button fx:id="cancel" mnemonicParsing="false" onAction="#back" prefHeight="51.0" prefWidth="986.0" styleClass="button3" text="Back" />
          </children>
       </VBox>
       <VBox>

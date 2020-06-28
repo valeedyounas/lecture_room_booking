@@ -135,13 +135,24 @@ public class LoginController implements Initializable {
             l3SignUp.setText("");
             if (!passwordSignUp.getText().trim().equals("")) {
                 //main.getCs().insert(name, password);
-
+                main.client.startServer_communication();
                 Staff s = new Staff();
                 s.setName(name);
                 s.setPassword(password);
-                boolean response = false;
-                if (response) {
-                    l6SignUp.setText("Account Created Successfully");
+                try {
+                    main.client.send_toServer(s);
+                    main.client.send_toServer("SIGNUP");
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                Object o = main.client.receive_fromServer();
+                int response = -1;
+                if(o!=null) {
+                    response = (int)o;
+                }
+                if (response!=-1) {
+                    l6SignUp.setText("Account Created Successfully\nPlease note your ID (for future login) which is: "+response);
                 } else {
                     l6SignUp.setText("Account did not create Successfully");
                 }
@@ -149,13 +160,16 @@ public class LoginController implements Initializable {
                 passwordSignUp.setText("");
 
             }
-//                        System.out.println(inserted);
+
 
             else
                 l6SignUp.setText("Field Empty");
         } else
             l5SignUp.setText("Invalid");
     }
+
+
+
 
 
     /**

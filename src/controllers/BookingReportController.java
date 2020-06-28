@@ -172,8 +172,7 @@ public class BookingReportController implements Initializable {
         tableview.setItems(data);
 
     }
-
-    private void showViews(Room r, String t) throws IOException, SQLException {
+    private void showViews(int k, Services.Requirements r, String t) throws IOException, SQLException {
         data = null;
         data = FXCollections.observableArrayList();
         try {
@@ -300,7 +299,7 @@ public class BookingReportController implements Initializable {
             r.date = date1.getValue().toString();
             r.capacity = Integer.parseInt(roomCapacity.getText().strip());
             r.type = roomType.getText();
-            showViews(r, "AVAILABLE");
+            showViews(0,r, "AVAILABLE");
         } catch (Exception e) {
             //e.printStackTrace();
             System.out.println("Error on Building Data");
@@ -309,12 +308,12 @@ public class BookingReportController implements Initializable {
 
     // Event Listener on Button[#cancel].onAction
     @FXML
-    public void cancelsale(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/ManagerScreen.fxml"));
-        Scene scene = new Scene(root, 1920, 990);
+    public void back(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../gui/StaffScreen.fxml"));
+        Scene scene = new Scene(root);
 
         Main.Get_Stage().setScene(scene);
-        Main.Get_Stage().setTitle("Sales Report");
+        Main.Get_Stage().setTitle("Staff Screen");
         Main.Get_Stage().show();
     }
 

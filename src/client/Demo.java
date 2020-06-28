@@ -11,49 +11,49 @@ import java.util.Scanner;
 
 public class Demo {
     private int port_toRunon;
-    private int forThread =-1;
-    public static ClientCommunicator tempx ;
+    private int forThread = -1;
+    public static ClientCommunicator tempx;
     private ServerCommunicator tempy;
     Socket connectSocket;
     Main main = mainFactory.createMain();
 
-    public String getIp(){
+    public String getIp() {
         return tempx.get_myIp();
     }
 
 
-    public Demo (){
+    public Demo() {
         Scanner cin = new Scanner(System.in);
         String port = cin.nextLine();
         port_toRunon = Integer.parseInt(port);
-        tempx  = new ClientCommunicator(port_toRunon);
-        tempy= new ServerCommunicator();
+        tempx = new ClientCommunicator(port_toRunon);
+        tempy = new ServerCommunicator();
     }
 
     public int getPortToRunOn() {
         return port_toRunon;
     }
-    public Socket getConnectSocket(){
+
+    public Socket getConnectSocket() {
         return connectSocket;
     }
 
     public Socket start_AcceptThread() {
 
-        AcceptClient t=null;
+        AcceptClient t = null;
         try {
             //0 indicates which friend im talking to
 
             t = new AcceptClient(tempx);
             t.start();
 
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        catch (Exception e ) { e.printStackTrace(); }
-
 
 
         return connectSocket;
     }
-
 
 
     //server communicating
@@ -73,7 +73,7 @@ public class Demo {
     public Object receive_fromServer() {
         Object o = null;
         try {
-            o=tempy.receiveFrom_server();
+            o = tempy.receiveFrom_server();
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -81,6 +81,14 @@ public class Demo {
         return o;
 
 
+    }
+
+    public void close_connection() {
+        try {
+            tempy.closeConnection_server();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

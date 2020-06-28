@@ -119,7 +119,7 @@ public class Services {
 
     public static  ArrayList<Room> list_availableRooms(Requirements r) {
         String query = "select * from `room` where ( `type` ='" + r.type + "' and `capacity` >= " + r.capacity +
-                " and `status`=0" + ")";
+                " and `status`= 0 " + ")";
         return  prepare_rooms(db.executeSelect(query));
     }
 
