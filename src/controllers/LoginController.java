@@ -79,6 +79,8 @@ public class LoginController implements Initializable {
 
                 try {
                     connectsocket = cc.openConnection(main.ip, main.serverPort);
+                    cc.sendTo_OtherClient(s);
+                    cc.sendTo_OtherClient("SIGNIN");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -89,6 +91,7 @@ public class LoginController implements Initializable {
                 while (sr.getResponse() == null) {
 
                     response = sr.getResponse();
+
 
                 }
                 System.out.println(response);

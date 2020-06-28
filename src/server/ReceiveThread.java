@@ -37,11 +37,14 @@ public class ReceiveThread extends Thread {
 
                 System.out.println(client_details.getClass().getName());
                 if (client_details.getClass().getName().equals("misc.Staff")) {
+                    //System.out.println();
                     Staff a = (Staff) client_details;
                     String command = (String) cmd;
+
                     if (command.compareTo("SIGNIN") == 0) {
                         //Write authentication code
                         boolean isVerified = Staff.verify(a.getId(), a.getPassword());
+                        System.out.println(a.getId());
 
                         try {
                             tempx.responseTo_OtherClient(isVerified, connectSocket);
