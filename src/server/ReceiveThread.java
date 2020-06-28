@@ -1,10 +1,12 @@
 package server;
 
+import javafx.concurrent.Service;
 import misc.Booking;
 import misc.Room;
 import misc.Staff;
 
 import java.net.Socket;
+import java.sql.ResultSet;
 
 public class ReceiveThread extends Thread {
     private Socket connectSocket;
@@ -21,6 +23,7 @@ public class ReceiveThread extends Thread {
 
         while (true) {
             client_details = null;
+            ResultSet rs = null;
 
             try {
                 client_details = tempx.receiveFrom_otherClient(connectSocket);
@@ -107,14 +110,18 @@ public class ReceiveThread extends Thread {
             } else if (client_details instanceof Services.Requirements) {
                 Services.Requirements room_type = (Services.Requirements) client_details;
                 String command = (String) cmd;
-                if (command.compareTo("AVAILABLE") == 0) {
+                if (command == null){
+                    rs = Services.list_allBookings();
+                }
+                else if (command.compareTo("AVAILABLE") == 0) {
+                    rs = Services.list_availableRooms(room_type);
 
                 } else if (command.compareTo("LISTDAY") == 0) {
-
+                    rs = Services.list_dayBookings(room_type);
                 }
 
                 try {
-                    //tempx.responseTo_OtherClient(signup_booleans, connectSocket);
+                    tempx.responseTo_OtherClient(rs, connectSocket);
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

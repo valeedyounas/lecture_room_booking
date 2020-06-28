@@ -22,7 +22,7 @@
       <VBox>
          <children>
             <VBox />
-            <Button mnemonicParsing="false" prefHeight="61.0" prefWidth="221.0" styleClass="button1" text="All Bookings" />
+            <Button mnemonicParsing="false" onAction="#showAllBookings" prefHeight="61.0" prefWidth="221.0" styleClass="button1" text="All Bookings" />
             <HBox prefHeight="60.0" prefWidth="221.0">
                <children>
                   <TextField prefHeight="43.0" prefWidth="206.0" styleClass="button1" />
