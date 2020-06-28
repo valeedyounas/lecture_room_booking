@@ -43,7 +43,17 @@ public class MySQLDatabase {
         }
     }
 
+    public ResultSet getResultSet(String tableName){
+        String sqlQuery = "SELECT * FROM " + tableName;
+        try {
+            ResultSet rsRows = stmt.executeQuery(sqlQuery);
+            return  rsRows;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
 
+    }
     public ArrayList<ArrayList<String>> getRows(String tableName) {
         ArrayList<ArrayList<String>> rows = new ArrayList<ArrayList<String>>();
         String sqlQuery = new String();
@@ -86,6 +96,30 @@ public class MySQLDatabase {
         }
     }
 
+    public ResultSet getResultSet(String tableName, String colName, int value){
+        String sqlQuery = "Select * FROM " + tableName + " Where " + colName + " = " + value + "";
+        System.out.println(sqlQuery);
+        try {
+            ResultSet rsRows = stmt.executeQuery(sqlQuery);
+            return rsRows;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+    public ResultSet getResultSet(String tableName, String colName, String value){
+        String sqlQuery = "Select * FROM " + tableName + " Where " + colName + " = '" + value + "'";
+        System.out.println(sqlQuery);
+        try {
+            ResultSet rsRows = stmt.executeQuery(sqlQuery);
+            return rsRows;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
     public ArrayList<ArrayList<String>> getIndexValue(String tableName, String colName, int value) {
         String sqlQuery = new String();
         ArrayList<ArrayList<String>> rows = new ArrayList<ArrayList<String>>();
@@ -146,15 +180,11 @@ public class MySQLDatabase {
         }
     }
 
-    public ArrayList<ArrayList<String>> executeSelect(String sqlQuery){
-        ArrayList<ArrayList<String>> rows = new ArrayList<ArrayList<String>>();
+    public ResultSet executeSelect(String sqlQuery){
         try {
             ResultSet rsRows = stmt.executeQuery(sqlQuery);
-            while (rsRows.next()) {
-                rows.add(rowToColumns(rsRows));
-            }
-            rsRows.close();
-            return rows;
+
+            return rsRows;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

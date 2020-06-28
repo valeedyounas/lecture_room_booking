@@ -63,15 +63,17 @@ public class LoginController implements Initializable {
             l1LogIn.setText("");
             if (!passwordLogIn.getText().trim().equals("")) {
                 l2LogIn.setText("");
-                int cashierID = Integer.parseInt(emailLogIn.getText());
+                int ID = Integer.parseInt(emailLogIn.getText());
+                String pw = passwordLogIn.getText();
                 //Response from server
+
                 boolean verified = false;
                 if (verified) {
 
                     Stage stage;
                     Parent root;
                     stage = (Stage) LogIn.getScene().getWindow();
-                    root = FXMLLoader.load(getClass().getResource("StaffScreen.fxml"));
+                    root = FXMLLoader.load(getClass().getResource("../gui/StaffScreen.fxml"));
                     Scene sc = new Scene(root);
                     sc.getStylesheets().add(getClass().getResource("StyleSheet.css").toExternalForm());
                     stage.setScene(sc);
@@ -96,10 +98,7 @@ public class LoginController implements Initializable {
     Label l6SignUp = new Label();
     @FXML
     Button SignUp = new Button();
-    @FXML
-    TextField emailSignUp = new TextField();
-    @FXML
-    TextField PhoneSignUp = new TextField();
+
     @FXML
     TextField nameSignUp = new TextField();
     @FXML
@@ -107,23 +106,15 @@ public class LoginController implements Initializable {
 
     @FXML
     private void handleButtonSignUp(ActionEvent event) throws SQLException {
-       /* String name = nameSignUp.getText();
+       String name = nameSignUp.getText();
         String password = passwordSignUp.getText();
         l6SignUp.setText("");
         if (!nameSignUp.getText().trim().equals("") && validateName(nameSignUp.getText().toString())) {
             l3SignUp.setText("");
-            if (!emailSignUp.getText().trim().equals("")) {
-                l4SignUp.setText("");
-                if (!PhoneSignUp.getText().trim().equals("") && validatePhoneumber(PhoneSignUp.getText().toString())) {
-                    l5SignUp.setText("");
-                    if (!passwordSignUp.getText().trim().equals("")) {
-
-
-                        main.getCs().insert(name, emailAddress, phoneNumber, designation, address, password);
+            if (!passwordSignUp.getText().trim().equals("")) {
+                        //main.getCs().insert(name, password);
                         l6SignUp.setText("Account Created Successfully");
                         nameSignUp.setText("");
-                        emailSignUp.setText("");
-                        PhoneSignUp.setText("");
                         passwordSignUp.setText("");
 
                     }
@@ -133,19 +124,17 @@ public class LoginController implements Initializable {
                         l6SignUp.setText("Field Empty");
                 } else
                     l5SignUp.setText("Invalid");
-            } else
-                l4SignUp.setText("Invalid");
-        } else
-            l3SignUp.setText("Invalid");
-*/
-    }
+        }
 
 
-   /* @FXML
+
+
+    @FXML
     Button adminPanel = new Button();
 
     @FXML
     private void handleButtonAdminPanel(ActionEvent event) throws IOException {
+        /*
         Stage stage;
         Parent root;
         stage = (Stage) adminPanel.getScene().getWindow();
@@ -153,8 +142,8 @@ public class LoginController implements Initializable {
         Scene sc = new Scene(root);
         sc.getStylesheets().add(getClass().getResource("StyleSheet.css").toExternalForm());
         stage.setScene(sc);
-        stage.show();
-    }*/
+        stage.show();*/
+    }
 
     /**
      * Initializes the controller class.

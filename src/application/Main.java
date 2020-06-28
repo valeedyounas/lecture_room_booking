@@ -7,23 +7,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.awt.desktop.AppForegroundListener;
-
 public class Main extends Application {
     public static Stage s;
+
 
     @Override
     public void start(Stage primaryStage) {
         try {
-          /*  Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));//LoginMainScreen
+            Parent root = FXMLLoader.load(getClass().getResource("../gui/Login.fxml"));//LoginMainScreen
             Scene scene = new Scene(root);
-
+            MySQLDatabase.getInstance("jdbc:mysql://localhost/lecture_room_booking", "root", "tiger");
             primaryStage.setScene(scene);
-            primaryStage.show();*/
-            MySQLDatabase.getInstance("jdbc:mysql://localhost/LectureRoomBooking", "root", "tiger");
-            Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-            primaryStage.setTitle("Hello World");
-            primaryStage.setScene(new Scene(root, 300, 275));
             primaryStage.show();
         } catch(Exception e) {
             e.printStackTrace();
