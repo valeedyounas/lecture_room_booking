@@ -1,5 +1,6 @@
 package application;
 
+import client.Demo;
 import client.ServerCommunicator;
 import client.ServerReceive;
 import database.MySQLDatabase;
@@ -27,6 +28,7 @@ public class Main extends Application {
 
     public static int serverPort = 4000;
     public static int thisPort = 5000;
+    public static Demo client = new Demo();
 
     @Override
     public void start(Stage primaryStage) {
