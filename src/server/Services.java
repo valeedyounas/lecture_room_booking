@@ -7,6 +7,7 @@ import misc.Room;
 import database.MySQLDatabase;
 import misc.Staff;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -77,7 +78,7 @@ public class Services {
     }
 
 
-    public static class Requirements {
+    public static class Requirements implements Serializable {
         public int capacity;
         public String type;
         public String date;

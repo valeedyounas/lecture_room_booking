@@ -74,6 +74,7 @@ public class LoginController implements Initializable {
                 s.setId(ID);
                 s.setPassword(pw);
                 main.sc.sendConnectRequest();
+                main.srt.start();
                 main.sc.sendTo_server(s);
                 main.sc.sendTo_server("SIGNIN");
 

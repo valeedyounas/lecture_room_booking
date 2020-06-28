@@ -34,8 +34,8 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-       Main.srt =  new ServerReceive(Main.sc);
-       srt.start();
+       srt =  new ServerReceive(Main.sc);
+     //  srt.start();
         //initialize();
         launch(args);
     }
