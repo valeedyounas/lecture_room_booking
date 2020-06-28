@@ -70,29 +70,24 @@ public class LoginController implements Initializable {
                 l2LogIn.setText("");
                 int ID = Integer.parseInt(emailLogIn.getText());
                 String pw = passwordLogIn.getText();
+                main.client.startServer_communication();
                 //Response from server
 
                 Staff s = new Staff();
                 s.setId(ID);
                 s.setPassword(pw);
-                Socket connectsocket = null;
-
                 try {
-                    connectsocket = cc.openConnection(main.ip, main.serverPort);
+                    main.client.send_toServer(s);
+                    main.client.send_toServer("SIGNIN");
                 } catch (Exception e) {
+                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-                ServerReceive sr = new ServerReceive(connectsocket, cc);
-                sr.start();
-                Object response = false;
-
-                while (sr.getResponse() == null) {
-
-                    response = sr.getResponse();
-
-                }
-                System.out.println(response);
+                Object o = main.client.receive_fromServer();
                 boolean verified = false;
+                if(o!=null) {
+                    verified = (boolean)o;
+                }
 
                 if (verified) {
 
@@ -104,6 +99,7 @@ public class LoginController implements Initializable {
                     sc.getStylesheets().add(getClass().getResource("StyleSheet.css").toExternalForm());
                     stage.setScene(sc);
                     stage.show();
+                    main.client.start_AcceptThread();
                 } else {
                     l1LogIn.setText("Login Failed");
                 }
