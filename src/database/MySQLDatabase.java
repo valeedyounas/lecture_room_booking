@@ -212,12 +212,14 @@ public class MySQLDatabase {
         }
     }
 
-    public int addStaff(String name, String password, String username, String phone, String address) throws SQLException {
-        String sqlQuery = new String();
-        sqlQuery = "INSERT INTO `staff`(`Name`, `Password`, `Phone`, `Address`) "
-                + "VALUES ('" + name + "', '" + password + "', '" + phone + "', '" + address + "' )";
-        //System.out.println(sqlQuery);
-        return stmt.executeUpdate(sqlQuery);
+    public int addStaff(String name, String password)  {
+        String sqlQuery = "INSERT INTO `staff`(`Name`, `Password`) "
+                + "VALUES ('" + name + "', '" + password + "')";
+        try {
+            return stmt.executeUpdate(sqlQuery);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 	/*public int updateEmployee(String ID, String name, String password, String phone, String address,String type) throws SQLException

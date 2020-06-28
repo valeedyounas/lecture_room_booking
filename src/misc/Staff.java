@@ -12,6 +12,12 @@ public class Staff implements Serializable {
     private int id;
     private String password;
 
+    public static boolean singUp(Staff s) {
+        if (db.addStaff(s.getName(), s.getPassword()) > 0)
+            return true;
+
+        return false;
+    }
 
     public static boolean verify(int userID, String password) {
         ArrayList<ArrayList<String>> staff = db.getIndexValue("Staff", "id", userID);
