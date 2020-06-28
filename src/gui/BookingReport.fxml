@@ -25,24 +25,24 @@
             <Button mnemonicParsing="false" onAction="#showAllBookings" prefHeight="61.0" prefWidth="221.0" styleClass="button1" text="All Bookings" />
             <HBox prefHeight="60.0" prefWidth="221.0">
                <children>
-                  <TextField prefHeight="43.0" prefWidth="206.0" styleClass="button1" />
-                  <Button mnemonicParsing="false" prefHeight="44.0" prefWidth="128.0" styleClass="button1" text="Room" />
+                  <TextField fx:id="roomID" prefHeight="43.0" prefWidth="206.0" styleClass="button1" />
+                  <Button fx:id="Room" mnemonicParsing="false" onAction="#showBookingsByRoom" prefHeight="44.0" prefWidth="128.0" styleClass="button1" text="Room" />
                </children>
             </HBox>
             <VBox prefHeight="149.0" prefWidth="221.0">
                <children>
                   <Label prefHeight="31.0" prefWidth="63.0" text="Pick a date" textFill="WHITE" />
-                  <DatePicker prefHeight="49.0" prefWidth="223.0" styleClass="button1" />
-                  <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="224.0" styleClass="button1" text="Search on this date" />
+                  <DatePicker fx:id="date" prefHeight="49.0" prefWidth="223.0" styleClass="button1" />
+                  <Button fx:id="byDate" mnemonicParsing="false" onAction="#showBookingsByDate" prefHeight="54.0" prefWidth="224.0" styleClass="button1" text="Search on this date" />
                </children>
             </VBox>
             <VBox prefHeight="218.0" prefWidth="221.0">
                <children>
                   <Label prefHeight="36.0" prefWidth="63.0" text="Pick a date" textFill="WHITE" />
-                  <DatePicker prefHeight="45.0" prefWidth="221.0" styleClass="button1" />
-                  <TextField promptText="Room Type" styleClass="button1" />
-                  <TextField promptText="Room Capacity" styleClass="button1" />
-                  <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="221.0" styleClass="button1" text="Search by these" />
+                  <DatePicker fx:id="date1" prefHeight="45.0" prefWidth="221.0" styleClass="button1" />
+                  <TextField fx:id="roomType" promptText="Room Type" styleClass="button1" />
+                  <TextField fx:id="roomCapacity" promptText="Room Capacity" styleClass="button1" />
+                  <Button fx:id="searchByThese" mnemonicParsing="false" onAction="#showBookingsByThree" prefHeight="54.0" prefWidth="221.0" styleClass="button1" text="Search by these" />
                </children>
             </VBox>
             <ImageView fitHeight="193.0" fitWidth="221.0" pickOnBounds="true" preserveRatio="true">
