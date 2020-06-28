@@ -181,11 +181,16 @@ public class MySQLDatabase {
         }
     }
 
-    public ResultSet executeSelect(String sqlQuery){
+    public ArrayList<ArrayList<String>> executeSelect(String sqlQuery){
+
+        ArrayList<ArrayList<String>> rows = new ArrayList<ArrayList<String>>();
         try {
             ResultSet rsRows = stmt.executeQuery(sqlQuery);
-
-            return rsRows;
+            while (rsRows.next()) {
+                rows.add(rowToColumns(rsRows));
+            }
+            rsRows.close();
+            return rows;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

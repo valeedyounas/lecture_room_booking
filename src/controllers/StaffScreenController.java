@@ -10,9 +10,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import server.Services;
 
 
 import java.io.IOException;
+import java.sql.ResultSet;
 
 public class StaffScreenController {
 
@@ -23,6 +25,8 @@ public class StaffScreenController {
     public void listBookings() {
         Parent root = null;
         try {
+
+
             root = FXMLLoader.load(getClass().getResource("../gui/BookingReport.fxml"));
             Scene scene = new Scene(root);
             Main.Get_Stage().setScene(scene);

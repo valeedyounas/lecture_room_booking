@@ -1,6 +1,10 @@
 package server;
 
-import javafx.beans.binding.StringBinding;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TableColumn;
+import javafx.util.Callback;
 import misc.Booking;
 import misc.Lecturer;
 import misc.Room;
@@ -9,7 +13,6 @@ import misc.Staff;
 
 import java.io.Serializable;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -18,6 +21,10 @@ public class Services {
 
     public Services() throws Exception {
     }
+
+
+
+
 
     public static boolean add_booking(Booking booking) {
         //True: added successfully
@@ -41,8 +48,8 @@ public class Services {
             b.setDate(l.get(i).get(1));
             b.setTime(l.get(i).get(2));
             b.setDuration(Integer.parseInt(l.get(i).get(3)));
-            b.setExpected_attendees(Integer.parseInt(l.get(i).get(4)));
-            b.setReason_booking(l.get(i).get(5));
+            b.setReason_booking(l.get(i).get(4));
+            b.setExpected_attendees(Integer.parseInt(l.get(i).get(5)));
 
             int l_id = Integer.parseInt(l.get(i).get(6));
             ArrayList<ArrayList<String>> row = db.getIndexValue("Lecturer", "id", l_id);
@@ -77,31 +84,32 @@ public class Services {
 
     }
 
+    public static ArrayList<Booking> list_allBookings() {
+        return prepare_bookings(db.getRows("Booking"));
+    }
+
 
     public static class Requirements implements Serializable {
         public int capacity;
         public String type;
         public String date;
     }
-    public static ResultSet list_allBookings() {
-        return db.getResultSet("booking");
-    }
 
-    public static ResultSet list_roomBookings(Room room) {
-        return  db.getResultSet("Booking", "room_id", room.getId());
+    public static ArrayList<ArrayList<String>> list_roomBookings(Room room) {
+        return  db.getIndexValue("Booking", "room_id", room.getId());
 
     }
 
 
-    public static ResultSet list_dayBookings(Requirements r) {
-        return db.getResultSet("Booking", "date", r.date);
+    public static ArrayList<Booking> list_dayBookings(Requirements r) {
+        return prepare_bookings(db.getIndexValue("Booking","date",r.date));
     }
 
-    public static  ResultSet list_availableRooms(Requirements r) {
+    public static  ArrayList<Booking> list_availableRooms(Requirements r) {
 
         String query = "select * from `room` where ( `type` ='" + r.type + "' and `capacity` >= " + r.capacity +
                 " and `status`=0" + ")";
-        return  db.executeSelect(query);
+        return  prepare_bookings(db.executeSelect(query));
 //        for (int i = 0; i < b.size(); i++) {
 //
 //            Room room = new Room();

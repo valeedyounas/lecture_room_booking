@@ -35,7 +35,7 @@ public class Main extends Application {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("../gui/Login.fxml"));//LoginMainScreen
             Scene scene = new Scene(root);
-
+            s = primaryStage;
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch(Exception e) {

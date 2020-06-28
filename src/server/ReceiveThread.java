@@ -1,11 +1,18 @@
 package server;
 
+import javax.sql.rowset.*;
+import javax.sql.rowset.BaseRowSet;
+
+import javafx.scene.control.TableColumn;
 import misc.Booking;
 import misc.Room;
 import misc.Staff;
 
+import java.io.Serializable;
 import java.net.Socket;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ReceiveThread extends Thread {
     private Socket connectSocket;
@@ -18,8 +25,12 @@ public class ReceiveThread extends Thread {
         return client_details;
     }
 
+    private class ResultSetJ implements Serializable {
+        public ResultSet rs;
+    }
     public void run() {
-        ResultSet rs = null;
+
+        ArrayList<Booking> rs = new ArrayList<Booking>();
         if (connectSocket!=null)
         {
             while (true) {
@@ -44,8 +55,8 @@ public class ReceiveThread extends Thread {
                     if (command.compareTo("SIGNIN") == 0) {
                         //Write authentication code
                         boolean isVerified = Staff.verify(a.getId(), a.getPassword());
-                        System.out.println(a.getId()+a.getPassword());
-                        System.out.println(isVerified);
+                       // System.out.println(a.getId()+a.getPassword());
+                      //  System.out.println(isVerified);
                         try {
                             tempx.responseTo_OtherClient(isVerified, connectSocket);
                         } catch (Exception e) {
@@ -114,13 +125,13 @@ public class ReceiveThread extends Thread {
                     Services.Requirements room_type = (Services.Requirements) client_details;
                     String command = (String) cmd;
                     if (command == null) {
-                        rs = Services.list_allBookings();
+                       rs = Services.list_allBookings();
                     }
                     else if (command.compareTo("AVAILABLE") == 0) {
-                        rs = Services.list_availableRooms(room_type);
+                    //    rs.rs = Services.list_availableRooms(room_type);
 
                     } else if (command.compareTo("LISTDAY") == 0) {
-                        rs = Services.list_dayBookings(room_type);
+                    //    rs.rs = Services.list_dayBookings(room_type);
 
                     }
 
