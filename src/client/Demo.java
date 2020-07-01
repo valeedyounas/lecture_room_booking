@@ -11,7 +11,6 @@ import java.util.Scanner;
 
 public class Demo {
     private int port_toRunon;
-    private int forThread = -1;
     public static ClientCommunicator tempx;
     private ServerCommunicator tempy;
     Socket connectSocket;
@@ -23,6 +22,7 @@ public class Demo {
 
 
     public Demo() {
+        System.out.println("Enter port for client: ");
         Scanner cin = new Scanner(System.in);
         String port = cin.nextLine();
         port_toRunon = Integer.parseInt(port);
