@@ -54,7 +54,7 @@ public class StaffScreenController {
     public void deleteBooking() {
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("../gui/DeleteBookingController.fxml"));
+            root = FXMLLoader.load(getClass().getResource("../gui/DeleteBooking.fxml"));
             Scene scene = new Scene(root);
             Main.Get_Stage().setScene(scene);
             Main.Get_Stage().show();

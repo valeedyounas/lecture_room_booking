@@ -111,7 +111,19 @@ public class ReceiveThread extends Thread {
                             // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
-                    } else if (command.compareTo("DELETE") == 0) {
+
+                    }else if (command.compareTo("DELETE ID") == 0) {
+                        //delete booking b
+                        //if deleted successfully send true to client
+                        Booking r = Services.get_booking(b);
+                        try {
+                            tempx.responseTo_OtherClient(r, connectSocket);
+                        } catch (Exception e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                    else if (command.compareTo("DELETE") == 0) {
                         //delete booking b
                         //if deleted successfully send true to client
                         boolean r = Services.delete_booking(b);

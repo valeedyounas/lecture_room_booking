@@ -78,13 +78,6 @@ public class MySQLDatabase {
         }
     }
 
-    public boolean updateRoom(int id, int status) {
-        String query = " update `room` set `status` = " + status + " where `id`= " + id;
-        int i = dbConnection.executeUpdate(query);
-        if (i > 0)
-            return true;
-        return false;
-    }
 
     public ResultSet getResultSet(String tableName, String colName, int value) {
         String sqlQuery = "Select * FROM " + tableName + " Where " + colName + " = " + value + "";
@@ -191,6 +184,28 @@ public class MySQLDatabase {
         }
     }
 
+    public ArrayList<ArrayList<String>> getIndexValue(String tableName, String colName1, String value1, String colName2, int value2,
+                                                      String colName3, int value3) {
+        String sqlQuery = new String();
+        ArrayList<ArrayList<String>> rows = new ArrayList<ArrayList<String>>();
+
+        sqlQuery = "Select * FROM " + tableName + " Where " + colName1 + " = '" + value1 + "' and " + colName2 + " =" + value2 + " and " +
+                colName3 +" != " +value3;
+
+        System.out.println(sqlQuery);
+        try {
+            ResultSet rsRows = stmt.executeQuery(sqlQuery);
+            while (rsRows.next()) {
+                rows.add(rowToColumns(rsRows));
+            }
+            rsRows.close();
+            return rows;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public ArrayList<ArrayList<String>> executeSelect(String sqlQuery) {
 
         ArrayList<ArrayList<String>> rows = new ArrayList<ArrayList<String>>();
@@ -265,7 +280,7 @@ public class MySQLDatabase {
 
     public int addBooking(String date, String time, int duration, String b_reason, int ex_atendees, int l_id, int r_id, int s_id) {
         boolean check = false;
-        ArrayList<Booking> bookings = Services.list_dayBookings(date,r_id);
+        ArrayList<Booking> bookings = Services.list_dayBookings(date, r_id);
         System.out.println("In addBooking");
         try {
             DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
@@ -299,7 +314,7 @@ public class MySQLDatabase {
                     + " VALUES ('" + date + "', '" + time + "', " + duration + ", '" + b_reason + "', " + ex_atendees + ", " + l_id
                     + "," + r_id + "," + s_id + ")";
 
-            System.out.println(sqlQuery);
+          //  System.out.println(sqlQuery);
             try {
                 return stmt.executeUpdate(sqlQuery);
             } catch (SQLException e) {
@@ -313,28 +328,62 @@ public class MySQLDatabase {
 
     }
 
+
     public int updateBooking(int ID, String date, String time, int duration, String b_reason, int ex_atendees, int l_id, int r_id, int s_id) {
-        String sqlQuery = new String();
-        sqlQuery = "UPDATE `booking` SET `date`= '" + date
-                + "' ,`time`= '" + time + "',`duration`= " + duration + ",`booking_reason`= '" + b_reason + "',`expected_atendees`= " +
-                "`expected_atendees`= " + ex_atendees + "`lect_id` =" + l_id +
-                " `room_id`= " + r_id + " `staff_id`= " + s_id + " WHERE `id`=" + ID + ";";
-        // System.out.println(sqlQuery);
+
+        boolean check = false;
+        ArrayList<Booking> bookings = Services.list_dayBookings(date, r_id,ID);
+      //  System.out.println("In addBooking");
         try {
-            return stmt.executeUpdate(sqlQuery);
-        } catch (SQLException e) {
+            DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+            Time timeValue1 = new Time(formatter.parse(time).getTime());
+            LocalTime t1 = timeValue1.toLocalTime();
+            if (bookings.size() == 0)
+                check = true;
+
+            for (Booking b : bookings) {
+                Time timeValue2 = new Time(formatter.parse(b.getTime()).getTime());
+                LocalTime t2 = timeValue2.toLocalTime();
+                // LocalTime rangeTime = t2.plusMinutes(b.getDuration());
+                if (!(t1.isAfter(t2.minusMinutes(b.getDuration())) && t1.isBefore(t2.plusMinutes(b.getDuration())))) {
+//                    System.out.println("Inserted time = " + t1);
+//                    System.out.println("DB time = " + t2);
+//                    Duration d = Duration.between(t2, t1);
+//                    long minutes = Math.abs(d.toMinutes());
+//                    System.out.println("Difference in time: " + minutes);
+//                    System.out.println("Duration of already going class " + duration);
+//                    if (minutes > duration) {
+//                        check = true;
+//                    }
+                    check = true;
+                }
+            }
+
+            if (!check) {
+                return 0;
+            }
+
+
+            String sqlQuery;
+            sqlQuery = "UPDATE `booking` SET `date`= '" + date
+                    + "' ,`time`= '" + time + "',`duration`= " + duration + ",`booking_reason`= '" + b_reason +
+                    "', `expected_attendees`= " + ex_atendees + ",`lect_id` =" + l_id +
+                    ", `room_id`= " + r_id + ", `staff_id`= " + s_id + " WHERE `id`=" + ID ;
+            System.out.println(sqlQuery);
+            try {
+                return stmt.executeUpdate(sqlQuery);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return 0;
+            }
+        } catch (ParseException e) {
             e.printStackTrace();
-            return -1;
+            return 0;
         }
+
+
     }
 
-    public int executeUpdate(String query) {
-        try {
-            return stmt.executeUpdate(query);
-        } catch (SQLException ex) {
-            return -1;
-        }
-    }
 
 
     //helper

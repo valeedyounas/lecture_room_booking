@@ -45,16 +45,18 @@ public class UpdateBookingController {
     @FXML
     TextArea reason;
     @FXML
-    DatePicker datePicker1;
+    DatePicker date;
     @FXML
     Button find;
     @FXML
     TextField time;
     Main main = mainFactory.createMain();
-
+    @FXML
+    Label dateLabel;
 
     @FXML
     public void findBooking() {
+
         // SERVER KO BHEJO BOOKING DETAILS
         Booking b = new Booking();
         b.setId(Integer.parseInt(b_id.getText()));
@@ -80,12 +82,33 @@ public class UpdateBookingController {
             time.setText(bnew.getTime());
             reason.setText(bnew.getReason_booking());
             expected_attendees.setText(Integer.toString(bnew.getExpected_attendees()));
+
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate localDate = LocalDate.parse(bnew.getDate(), formatter);
-            System.out.println(bnew.getDate());
-            System.out.println(localDate);
-            datePicker1.setValue(localDate);
-           // datePicker1.setValue(date);
+            //System.out.println(bnew.getDate());
+            //System.out.println(localDate);
+            //datePicker.setValue(localDate);
+            date.setValue(localDate);
+          //  dateLabel.setText(bnew.getDate());
+
+       //     b_id.setEditable(true);
+            b_id.setDisable(false);
+      //      l_id.setEditable(true);
+            l_id.setDisable(false);
+      //      r_id.setEditable(true);
+            r_id.setDisable(false);
+            s_id.setDisable(false);
+            duration.setDisable(false);
+            time.setDisable(false);
+            reason.setDisable(false);
+            expected_attendees.setDisable(false);
+            date.setDisable(false);
+
+       //     datePicker.setDisable(false);
+        //    datePicker.setEditable(true);
+
+
+
 
         }else{
             Alert alert = new Alert(AlertType.WARNING);
@@ -97,7 +120,7 @@ public class UpdateBookingController {
         }
     }
     @FXML
-    public void handleSave() {
+    public void handleSave(ActionEvent event) {
         Booking bnew = new Booking();
         try {
                 Staff s = new Staff();
@@ -113,7 +136,8 @@ public class UpdateBookingController {
                 bnew.setExpected_attendees(Integer.parseInt(expected_attendees.getText()));
                 bnew.setDuration(Integer.parseInt(duration.getText()));
                 bnew.setTime(time.getText());
-                bnew.setDate(datePicker1.getValue().toString());
+                bnew.setDate(date.getValue().toString());
+                bnew.setId(Integer.parseInt(b_id.getText()));
                 try {
                     main.client.send_toServer(bnew);
                     main.client.send_toServer("UPDATE");
@@ -132,11 +156,11 @@ public class UpdateBookingController {
                     alert.setHeaderText("Room booking Updated!");
                     alert.setContentText("This Room booking has been updated successfully");
                     alert.showAndWait();
-                    //	handleCancel(event);
+                    handleCancel(event);
 
             } else {
                 Alert alert = new Alert(AlertType.WARNING);
-                alert.setTitle("Room Booking Updation");
+                alert.setTitle("Room Booking Update");
                 alert.setHeaderText("Booking not updated");
                 alert.setContentText("Unexpected Error occurred, Try Again!");
                 alert.showAndWait();
