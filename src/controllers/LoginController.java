@@ -5,19 +5,7 @@
  */
 package controllers;
 
-import java.io.IOException;
-import java.net.Socket;
-import java.net.URL;
-import java.sql.SQLException;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import application.Main;
-import application.mainFactory;
-import client.ServerCommunicator;
-import client.ServerReceive;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -29,23 +17,23 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import misc.Staff;
-import server.ClientCommunicator;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
 
-    Main main = mainFactory.createMain();
+    //Main main = mainFactory.createMain();
 
 
     public static boolean validateName(String name) {
         name = name.toLowerCase();
         int l1 = name.length();
-        name = name.replaceAll("[*0-9?!.@#$%,^&*(){]", "");
+        name = name.replaceAll("[*0-9?!.@#$%,^&(){]", "");
         int l2 = name.length();
-        if (l1 == l2)
-            return true;
-        else
-            return false;
+        return l1 == l2;
     }
 
 
@@ -59,34 +47,33 @@ public class LoginController implements Initializable {
     Label l2LogIn = new Label();
     @FXML
     Button LogIn = new Button();
-    public static String emailAddress;
 
 
     @FXML
-    private void handleButtonLogIn(ActionEvent event) throws SQLException, IOException {
+    private void handleButtonLogIn() throws IOException {
         if (!emailLogIn.getText().trim().equals("")) {
             l1LogIn.setText("");
             if (!passwordLogIn.getText().trim().equals("")) {
                 l2LogIn.setText("");
                 int ID = Integer.parseInt(emailLogIn.getText());
                 String pw = passwordLogIn.getText();
-                main.client.startServer_communication();
+                Main.client.startServer_communication();
                 //Response from server
 
                 Staff s = new Staff();
                 s.setId(ID);
                 s.setPassword(pw);
                 try {
-                    main.client.send_toServer(s);
-                    main.client.send_toServer("SIGNIN");
+                    Main.client.send_toServer(s);
+                    Main.client.send_toServer("SIGNIN");
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-                Object o = main.client.receive_fromServer();
+                Object o = Main.client.receive_fromServer();
                 boolean verified = false;
-                if(o!=null) {
-                    verified = (boolean)o;
+                if (o != null) {
+                    verified = (boolean) o;
                 }
 
                 if (verified) {
@@ -99,7 +86,7 @@ public class LoginController implements Initializable {
 //                    sc.getStylesheets().add(getClass().getResource("StyleSheet.css").toExternalForm());
                     stage.setScene(sc);
                     stage.show();
-                    main.client.start_AcceptThread();
+                    Main.client.start_AcceptThread();
                 } else {
                     l1LogIn.setText("Login Failed");
                 }
@@ -127,49 +114,43 @@ public class LoginController implements Initializable {
     PasswordField passwordSignUp = new PasswordField();
 
     @FXML
-    private void handleButtonSignUp(ActionEvent event) throws SQLException, IOException {
+    private void handleButtonSignUp() {
         String name = nameSignUp.getText();
         String password = passwordSignUp.getText();
         l6SignUp.setText("");
-        if (!nameSignUp.getText().trim().equals("") && validateName(nameSignUp.getText().toString())) {
+        if (!nameSignUp.getText().trim().equals("") && validateName(nameSignUp.getText())) {
             l3SignUp.setText("");
             if (!passwordSignUp.getText().trim().equals("")) {
                 //main.getCs().insert(name, password);
-                main.client.startServer_communication();
+                Main.client.startServer_communication();
                 Staff s = new Staff();
                 s.setName(name);
                 s.setPassword(password);
                 try {
-                    main.client.send_toServer(s);
-                    main.client.send_toServer("SIGNUP");
+                    Main.client.send_toServer(s);
+                    Main.client.send_toServer("SIGNUP");
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-                Object o = main.client.receive_fromServer();
+                Object o = Main.client.receive_fromServer();
                 int response = -1;
-                if(o!=null) {
-                    response = (int)o;
+                if (o != null) {
+                    response = (int) o;
                 }
-                if (response!=-1) {
-                    l6SignUp.setText("Account Created Successfully\nPlease note your ID (for future login) which is: "+response);
+                if (response != -1) {
+                    l6SignUp.setText("Account Created Successfully\nPlease note your ID (for future login) which is: " + response);
                 } else {
                     l6SignUp.setText("Account did not create Successfully");
                 }
                 nameSignUp.setText("");
                 passwordSignUp.setText("");
 
-            }
-
-
-            else
+            } else
                 l6SignUp.setText("Field Empty");
         } else
             l5SignUp.setText("Invalid");
     }
-
-
-
 
 
     /**
