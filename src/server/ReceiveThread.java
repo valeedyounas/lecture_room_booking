@@ -28,13 +28,13 @@ public class ReceiveThread extends Thread {
     private class ResultSetJ implements Serializable {
         public ResultSet rs;
     }
+
     public void run() {
 
 
         Object rs = null;
 
-        if (connectSocket!=null)
-        {
+        if (connectSocket != null) {
             while (true) {
                 client_details = null;
 
@@ -57,15 +57,15 @@ public class ReceiveThread extends Thread {
                     if (command.compareTo("SIGNIN") == 0) {
                         //Write authentication code
                         boolean isVerified = Staff.verify(a.getId(), a.getPassword());
-                       // System.out.println(a.getId()+a.getPassword());
-                      //  System.out.println(isVerified);
+                        // System.out.println(a.getId()+a.getPassword());
+                        //  System.out.println(isVerified);
                         try {
                             tempx.responseTo_OtherClient(isVerified, connectSocket);
                         } catch (Exception e) {
                             // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
-                    } else if (command.compareTo("SIGNUP")==0){
+                    } else if (command.compareTo("SIGNUP") == 0) {
 
                         int isCreated = Staff.signUp(a);
                         try {
@@ -87,6 +87,16 @@ public class ReceiveThread extends Thread {
                         try {
                             // if added successfully, send true to client
                             tempx.responseTo_OtherClient(r, connectSocket);
+                        } catch (Exception e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    } else if (command.compareTo("UPDATE ID") == 0) {
+                        //use Booking:b to update
+                        //if updated successfully send true to client
+                        Booking bnew = Services.get_booking(b);
+                        try {
+                            tempx.responseTo_OtherClient(bnew, connectSocket);
                         } catch (Exception e) {
                             // TODO Auto-generated catch block
                             e.printStackTrace();
@@ -127,13 +137,12 @@ public class ReceiveThread extends Thread {
                     Services.Requirements room_type = (Services.Requirements) client_details;
                     String command = (String) cmd;
                     if (command == null) {
-                       rs = (ArrayList<Booking>) Services.list_allBookings();
-                    }
-                    else if (command.compareTo("AVAILABLE") == 0) {
-                        rs = (ArrayList<Room>)Services.list_availableRooms(room_type);
+                        rs = (ArrayList<Booking>) Services.list_allBookings();
+                    } else if (command.compareTo("AVAILABLE") == 0) {
+                        rs = (ArrayList<Room>) Services.list_availableRooms(room_type);
 
                     } else if (command.compareTo("LISTDAY") == 0) {
-                        rs = (ArrayList<Booking>)Services.list_dayBookings(room_type);
+                        rs = (ArrayList<Booking>) Services.list_dayBookings(room_type);
 
                     }
 

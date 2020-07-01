@@ -1,5 +1,5 @@
 package server;
-
+/*
 import database.MySQLDatabase;
 import misc.Booking;
 
@@ -57,3 +57,4 @@ public class RoomStatusUpdation extends Thread {
         }
     }
 }
+*/

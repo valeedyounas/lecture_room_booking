@@ -40,7 +40,7 @@ public class StaffScreenController {
     public void updateBooking() {
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("../gui/BookingReport.fxml"));
+            root = FXMLLoader.load(getClass().getResource("../gui/UpdateBooking.fxml"));
             Scene scene = new Scene(root);
             Main.Get_Stage().setScene(scene);
             Main.Get_Stage().show();
@@ -54,7 +54,7 @@ public class StaffScreenController {
     public void deleteBooking() {
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("../gui/BookingReport.fxml"));
+            root = FXMLLoader.load(getClass().getResource("../gui/DeleteBookingController.fxml"));
             Scene scene = new Scene(root);
             Main.Get_Stage().setScene(scene);
             Main.Get_Stage().show();

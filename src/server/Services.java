@@ -112,14 +112,15 @@ public class Services {
 
     }
 
-
     public static ArrayList<Booking> list_dayBookings(Requirements r) {
         return prepare_bookings(db.getIndexValue("Booking","date",r.date));
     }
 
+    public static ArrayList<Booking> list_dayBookings(String date, int r_id) {
+        return prepare_bookings(db.getIndexValue("Booking","date",date,"room_id",r_id));
+    }
     public static  ArrayList<Room> list_availableRooms(Requirements r) {
-        String query = "select * from `room` where ( `type` ='" + r.type + "' and `capacity` >= " + r.capacity +
-                " and `status`= 0 " + ")";
+        String query = "select * from `room` where ( `type` ='" + r.type + "' and `capacity` >= " + r.capacity + ")";
         return  prepare_rooms(db.executeSelect(query));
     }
 
@@ -134,6 +135,15 @@ public class Services {
         if (i > 0)
             return true;
         return false;
+    }
+    public static Booking get_booking(Booking booking) {
+        //True: added successfully
+        //False: failed, double booking
+        System.out.println(booking.getId());
+        ArrayList<Booking> b = prepare_bookings(db.getIndexValue("Booking","id",booking.getId()));
+        if (b.size()!=0)
+            return b.get(0);
+        return null;
     }
 
     public static boolean delete_booking(Booking booking) {

@@ -7,8 +7,6 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -36,11 +34,6 @@
                         <Insets left="100.0" />
                      </HBox.margin>
                   </Label>
-                  <ImageView fitHeight="74.0" fitWidth="106.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@black-solid-icon-employee-applicant-man-logo-symbol-146530494.jpg" />
-                     </image>
-                  </ImageView>
                </children>
             </HBox>
             <HBox VBox.vgrow="ALWAYS">
@@ -108,6 +101,7 @@
                               <Label prefHeight="19.0" prefWidth="102.0" text="Time (HH:MM:SS)" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
                               <TextField fx:id="b_id" layoutX="188.0" layoutY="53.0" styleClass="button1" GridPane.columnIndex="2" />
                               <Label layoutX="115.0" layoutY="63.0" text="Booking ID" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                              <Button fx:id="find" mnemonicParsing="false" onAction="#findBooking" prefHeight="39.0" prefWidth="71.0" styleClass="button1" text="Find" GridPane.columnIndex="4" />
                            </children>
                         </GridPane>
                         <Label fx:id="lbl" prefHeight="47.0" prefWidth="256.0" textFill="#f52424" />
@@ -120,11 +114,6 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="30.0" spacing="5.0" styleClass="bottom-bar" VBox.vgrow="NEVER">
                <children>
-                  <ImageView fitHeight="35.0" fitWidth="218.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@logo.jpeg" />
-                     </image>
-                  </ImageView>
                   <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSave" prefHeight="54.0" prefWidth="120.0" styleClass="button1" text="Save" />
                   <Button fx:id="cancel" mnemonicParsing="false" onAction="#handleCancel" prefHeight="54.0" prefWidth="120.0" styleClass="button1" text="Back">
                      <HBox.margin>

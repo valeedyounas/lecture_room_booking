@@ -25,7 +25,7 @@ public class MySQLDatabase {
         return dbConnection;
     }
 
-    public static MySQLDatabase getInstance()  {
+    public static MySQLDatabase getInstance() {
         if (dbConnection == null) {
             try {
                 throw new Exception();
@@ -49,17 +49,18 @@ public class MySQLDatabase {
         }
     }
 
-    public ResultSet getResultSet(String tableName){
+    public ResultSet getResultSet(String tableName) {
         String sqlQuery = "SELECT * FROM " + tableName;
         try {
             ResultSet rsRows = stmt.executeQuery(sqlQuery);
-            return  rsRows;
+            return rsRows;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
 
     }
+
     public ArrayList<ArrayList<String>> getRows(String tableName) {
         ArrayList<ArrayList<String>> rows = new ArrayList<ArrayList<String>>();
         String sqlQuery = new String();
@@ -77,32 +78,15 @@ public class MySQLDatabase {
         }
     }
 
-    public boolean updateRoom (int id , int status){
-        String query = " update `room` set `status` = "+ status +" where `id`= " + id;
+    public boolean updateRoom(int id, int status) {
+        String query = " update `room` set `status` = " + status + " where `id`= " + id;
         int i = dbConnection.executeUpdate(query);
-        if (i>0)
+        if (i > 0)
             return true;
         return false;
     }
 
-    public ArrayList<ArrayList<String>> getAllBookings(String tableName) {
-        ArrayList<ArrayList<String>> rows = new ArrayList<ArrayList<String>>();
-        String sqlQuery = new String();
-        sqlQuery = "SELECT * FROM " + tableName;
-        try {
-            ResultSet rsRows = stmt.executeQuery(sqlQuery);
-            while (rsRows.next()) {
-                rows.add(rowToColumns(rsRows));
-            }
-            rsRows.close();
-            return rows;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public ResultSet getResultSet(String tableName, String colName, int value){
+    public ResultSet getResultSet(String tableName, String colName, int value) {
         String sqlQuery = "Select * FROM " + tableName + " Where " + colName + " = " + value + "";
         System.out.println(sqlQuery);
         try {
@@ -114,7 +98,8 @@ public class MySQLDatabase {
         }
 
     }
-    public ResultSet getResultSet(String tableName, String colName, String value){
+
+    public ResultSet getResultSet(String tableName, String colName, String value) {
         String sqlQuery = "Select * FROM " + tableName + " Where " + colName + " = '" + value + "'";
         System.out.println(sqlQuery);
         try {
@@ -126,13 +111,14 @@ public class MySQLDatabase {
         }
 
     }
+
     public ArrayList<ArrayList<String>> getIndexValue(String tableName, String colName, int value) {
         String sqlQuery = new String();
         ArrayList<ArrayList<String>> rows = new ArrayList<ArrayList<String>>();
 
-        sqlQuery = "Select * FROM " + tableName + " Where " + colName + " = " + value + "";
+        sqlQuery = "Select * FROM " + tableName + " Where " + colName + " = " + value;
 
-        System.out.println(sqlQuery);
+        //System.out.println(sqlQuery);
         try {
             ResultSet rsRows = stmt.executeQuery(sqlQuery);
             while (rsRows.next()) {
@@ -151,12 +137,8 @@ public class MySQLDatabase {
         ArrayList<ArrayList<String>> rows = new ArrayList<ArrayList<String>>();
 
         sqlQuery = "Select * FROM " + tableName + " Where " + colName + " = '" + value + "'";
-
-       // System.out.println(sqlQuery);
         try {
             ResultSet rsRows = stmt.executeQuery(sqlQuery);
-            //System.out.println("FEDate: " + value);
-            //System.out.println(rsRows.getString("Date"));
             while (rsRows.next()) {
                 rows.add(rowToColumns(rsRows));
             }
@@ -189,7 +171,27 @@ public class MySQLDatabase {
         }
     }
 
-    public ArrayList<ArrayList<String>> executeSelect(String sqlQuery){
+    public ArrayList<ArrayList<String>> getIndexValue(String tableName, String colName1, String value1, String colName2, int value2) {
+        String sqlQuery = new String();
+        ArrayList<ArrayList<String>> rows = new ArrayList<ArrayList<String>>();
+
+        sqlQuery = "Select * FROM " + tableName + " Where " + colName1 + " = '" + value1 + "' and " + colName2 + " =" + value2 + "";
+
+        System.out.println(sqlQuery);
+        try {
+            ResultSet rsRows = stmt.executeQuery(sqlQuery);
+            while (rsRows.next()) {
+                rows.add(rowToColumns(rsRows));
+            }
+            rsRows.close();
+            return rows;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ArrayList<ArrayList<String>> executeSelect(String sqlQuery) {
 
         ArrayList<ArrayList<String>> rows = new ArrayList<ArrayList<String>>();
         try {
@@ -204,6 +206,7 @@ public class MySQLDatabase {
             return null;
         }
     }
+
     public int removeRow(String tableName, String colName, String value) {
         String sqlQuery = new String();
         sqlQuery = "Delete FROM " + tableName + " Where " + colName + " = '" + value + "'";
@@ -225,14 +228,14 @@ public class MySQLDatabase {
             return 0;
         }
     }
-     /*String sqlQuery = "INSERT INTO `staff`(`Name`, `Password`) "
-                    + "VALUES ('" + name + "', '" + password + "')";"*/
-    public int addStaff(String name, String password)  {
+
+    /*String sqlQuery = "INSERT INTO `staff`(`Name`, `Password`) "
+                   + "VALUES ('" + name + "', '" + password + "')";"*/
+    public int addStaff(String name, String password) {
 
 
         String SQL_INSERT = "INSERT INTO staff (Name, Password)  VALUES (?,?)";
         try (
-
 
                 Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/lecture_room_booking", "root", "tiger");
                 PreparedStatement statement = connection.prepareStatement(SQL_INSERT,
@@ -240,21 +243,16 @@ public class MySQLDatabase {
         ) {
             statement.setString(1, name);
             statement.setString(2, password);
-
-            // ...
-
             int affectedRows = statement.executeUpdate();
-
             if (affectedRows == 0) {
-               // throw new SQLException("Creating user failed, no rows affected.");
+                // throw new SQLException("Creating user failed, no rows affected.");
                 return -1;
             }
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     return generatedKeys.getInt(1);
-                }
-                else {
-                   // throw new SQLException("Creating user failed, no ID obtained.");
+                } else {
+                    // throw new SQLException("Creating user failed, no ID obtained.");
                     return -1;
                 }
             }
@@ -266,27 +264,36 @@ public class MySQLDatabase {
 
 
     public int addBooking(String date, String time, int duration, String b_reason, int ex_atendees, int l_id, int r_id, int s_id) {
-        Services.Requirements r = new Services.Requirements();
-        r.date = date;
         boolean check = false;
-        ArrayList<Booking> bookings = Services.list_dayBookings(r);
-
+        ArrayList<Booking> bookings = Services.list_dayBookings(date,r_id);
+        System.out.println("In addBooking");
         try {
             DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
             Time timeValue1 = new Time(formatter.parse(time).getTime());
             LocalTime t1 = timeValue1.toLocalTime();
-        for(Booking b : bookings){
-            Time timeValue2 =  new Time(formatter.parse(b.getTime()).getTime());
-            LocalTime t2 = timeValue2.toLocalTime();
-            Duration d = Duration.between(t1, t2);
-            long minutes = d.toMinutes();
-           if ( minutes < duration ){
-               check = true;
-           }
-        }
-        if (check){
+            if (bookings.size() == 0)
+                check = true;
 
-        }
+            for (Booking b : bookings) {
+                Time timeValue2 = new Time(formatter.parse(b.getTime()).getTime());
+                LocalTime t2 = timeValue2.toLocalTime();
+                // LocalTime rangeTime = t2.plusMinutes(b.getDuration());
+                if (!(t1.isAfter(t2.minusMinutes(b.getDuration())) && t1.isBefore(t2.plusMinutes(b.getDuration())))) {
+//                    System.out.println("Inserted time = " + t1);
+//                    System.out.println("DB time = " + t2);
+//                    Duration d = Duration.between(t2, t1);
+//                    long minutes = Math.abs(d.toMinutes());
+//                    System.out.println("Difference in time: " + minutes);
+//                    System.out.println("Duration of already going class " + duration);
+//                    if (minutes > duration) {
+//                        check = true;
+//                    }
+                    check = true;
+                }
+            }
+            if (!check) {
+                return 0;
+            }
 
             String sqlQuery = "INSERT INTO `booking` (`date`, `time`, `duration`, `booking_reason`, `expected_attendees`,`lect_id`,`room_id`,`staff_id`)"
                     + " VALUES ('" + date + "', '" + time + "', " + duration + ", '" + b_reason + "', " + ex_atendees + ", " + l_id

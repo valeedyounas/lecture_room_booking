@@ -251,7 +251,7 @@ public class BookingReportController implements Initializable {
             r.setId(Integer.parseInt(roomID.getText()));
             showViews(0,r, null);
         } catch (Exception e) {
-            e.printStackTrace();
+          //  e.printStackTrace();
             System.out.println("Error on Building Data");
         }
     }
