@@ -8,7 +8,7 @@ public class Booking implements Serializable {
     private Lecturer lecturer;
     private String date;
     private String time;
-    private int duration; //would be in minutes weedu
+    private int duration;
     private String reason_booking;
 
 
